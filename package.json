@@ -1,0 +1,20 @@
+{
+  "name": "react-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "devDependencies": {
+    "babel-browser": "^6.1.19",
+    "express": "^4.14.1"
+  },
+  "scripts": {
+    "start": "node express.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sarah Fowler",
+  "license": "ISC"
+}
