@@ -5,6 +5,7 @@ var app = express()
 //   res.send('Hello World')
 // })
 
-app.use(express.static('public')) 
+app.use('/script', express.static('node_modules'))
+app.use(express.static('public'))
 
 app.listen(3000)
