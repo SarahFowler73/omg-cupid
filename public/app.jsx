@@ -1,9 +1,9 @@
-function Application() {
+function Application(props) {
   return (
     <div>
         <div>
           <h1>Welcome to OmgDating.date!</h1>
-          <p><em>rotating cute line about terrible people here</em> -- dumb name here</p>
+          <p><em>{props.quote}</em> -- {props.author}</p>
         </div>
         <form>
           <h2>Make Your Profile!</h2>
@@ -25,6 +25,16 @@ function Application() {
         </form>
     </div>
   );
+}
+
+Application.propTypes = {
+    quote: React.PropTypes.string.isRequired,
+    author: React.PropTypes.string.isRequired
+}
+
+Application.defaultProps = {
+    quote: "rotating cute line about terrible people here",
+    author: "dumb name here"
 }
 
 ReactDOM.render(<Application />, document.getElementById('container'));
