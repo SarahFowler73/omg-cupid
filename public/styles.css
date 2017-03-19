@@ -3,3 +3,12 @@
     max-width: 60%;
     padding: 10px;
 }
+
+.profileForm {
+    margin: auto;
+    text-align: center;
+}
+
+.profileForm label {
+    display: block;
+}

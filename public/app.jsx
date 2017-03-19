@@ -5,6 +5,9 @@ const QUOTES = [
 ]
 const AUTHORS = ["Albert Einstein", "George Washington", "Oprah"]
 
+const AGE_CHOICES = ["Pick one:", "18-24", "25-29", "30-34", "Really? You think this is dignified at your age?"]
+
+
 function randomElem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -12,7 +15,7 @@ function randomElem(arr) {
 function Header(props) {
     return (
     <div>
-      <h1>Welcome to OmgDating!</h1>
+      <h1>Welcome to OmgCupid!</h1>
       <p><em>{props.quote}</em></p> <p>-- {props.author}</p>
     </div>
     );
@@ -36,8 +39,9 @@ function ProfileForm(props) {
           <div className="form-group">
               <label htmlFor="age">Age: </label>
               <select id="age">
-                <option>figure out a for loop 18-35 plus arent you a little old to be dating
-                </option>
+                {props.ageOpts.map(function(age) {
+                    return <option>{age}</option>
+                })}
               </select>
           </div>
           <div className="form-group">
@@ -74,19 +78,29 @@ function Application(props) {
   return (
     <div>
         <Header quote={props.quote} author={props.author}/>
-        <ProfileForm />
+        <ProfileForm ageOpts={props.ageOpts} />
     </div>
   );
 }
 
 Application.propTypes = {
     quote: React.PropTypes.string,
-    author: React.PropTypes.string
+    author: React.PropTypes.string,
+    ageOpts: React.PropTypes.array
+    /* how_to_array_obj: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+            obj_key: React.PropTypes.string.isRequired
+        }))
+    )*/
 }
 
 Application.defaultProps = {
     quote: randomElem(QUOTES),
-    author: randomElem(AUTHORS)
+    author: randomElem(AUTHORS),
+    ageOpts: AGE_CHOICES
 }
+
+
+
 
 ReactDOM.render(<Application />, document.getElementById('container'));
