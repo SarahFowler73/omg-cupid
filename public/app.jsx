@@ -60,8 +60,8 @@ function AgeInput(props){
         <div className="form-group">
             <label htmlFor="age">Age: </label>
             <select id="age">
-              {props.ageOpts.map(function(age) {
-                  return <option>{age}</option>
+              {props.ageOpts.map(function(age, i) {
+                  return <option key={i}>{age}</option>
               })}
             </select>
         </div>
