@@ -7,6 +7,26 @@ const AUTHORS = ["Albert Einstein", "George Washington", "Oprah"]
 
 const AGE_CHOICES = ["Pick one:", "18-24", "25-29", "30-34", "Really? You think this is dignified at your age?"]
 
+const RADIO_CHOICES = [
+    {
+        id: 1,
+        value: 'male',
+        name: 'sex',
+        label: 'Male'
+    },
+    {
+        id: 2,
+        value: 'female',
+        name: 'sex',
+        label: 'Female'
+    },
+    {
+        id: 3,
+        value: 'terrible',
+        name: 'sex',
+        label: 'Yes, please!'
+    },
+]
 
 function randomElem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
@@ -52,29 +72,50 @@ AgeInput.propTypes = {
     ageOpts: React.PropTypes.array.isRequired
 }
 
-function SexInput() {
-    /* todo: radio button component? */
+
+function RadioButton(props) {
+    return (
+        <label>
+            <input type="radio" name={props.name} value={props.value}/>
+            {props.label}
+        </label>
+    );
+}
+
+RadioButton.propTypes = {
+    name: React.PropTypes.string.isRequired,
+    value: React.PropTypes.string.isRequired,
+    label: React.PropTypes.string.isRequired
+}
+
+function SexInput(props) {
     return (
         <div className="form-group">
             <label htmlFor="sex">Sex:</label>
             <div className="radio">
-
-              <label>
-                  <input type="radio" name="sex" value="male"/>
-                  Male
-              </label>
-              <label>
-                  <input type="radio" name="sex" value="female"/>
-                  Female
-              </label>
-              <label>
-                  <input type="radio" name="sex" value="terrible"/>
-                  Yes, please! // pop up 'don't be one of those'
-              </label>
+              {props.radio.map(function(button){
+                return <RadioButton
+                    key={button.id}
+                    name={button.name}
+                    value={button.value}
+                    label={button.label} />
+              })}
             </div>
         </div>
     );
 }
+
+SexInput.propTypes = {
+    radio: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+            id: React.PropTypes.number.isRequired,
+            name: React.PropTypes.string.isRequired,
+            value: React.PropTypes.string.isRequired,
+            label: React.PropTypes.string.isRequired
+        })
+    )
+}
+
 
 function DescriptionInput() {
     return (
@@ -102,7 +143,7 @@ function ProfileForm(props) {
           </div>
           <UserNameInput />
           <AgeInput ageOpts={props.ageOpts} />
-          <SexInput />
+          <SexInput radio={props.radio}/>
           <DescriptionInput />
           <LookingFor />
 
@@ -115,7 +156,7 @@ function Application(props) {
   return (
     <div>
         <Header quote={props.quote} author={props.author}/>
-        <ProfileForm ageOpts={props.ageOpts} />
+        <ProfileForm ageOpts={props.ageOpts} radio={props.radio} />
     </div>
   );
 }
@@ -123,18 +164,22 @@ function Application(props) {
 Application.propTypes = {
     quote: React.PropTypes.string,
     author: React.PropTypes.string,
-    ageOpts: React.PropTypes.array
-    /* how_to_array_obj: React.PropTypes.arrayOf(
+    ageOpts: React.PropTypes.array,
+    radio: React.PropTypes.arrayOf(
         React.PropTypes.shape({
-            obj_key: React.PropTypes.string.isRequired
-        }))
-    )*/
+            id: React.PropTypes.number.isRequired,
+            name: React.PropTypes.string.isRequired,
+            value: React.PropTypes.string.isRequired,
+            label: React.PropTypes.string.isRequired
+        })
+    )
 }
 
 Application.defaultProps = {
     quote: randomElem(QUOTES),
     author: randomElem(AUTHORS),
-    ageOpts: AGE_CHOICES
+    ageOpts: AGE_CHOICES,
+    radio: RADIO_CHOICES
 }
 
 
