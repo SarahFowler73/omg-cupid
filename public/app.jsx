@@ -7,7 +7,7 @@ const AUTHORS = ["Albert Einstein", "George Washington", "Oprah"]
 
 const AGE_CHOICES = ["Pick one:", "18-24", "25-29", "30-34", "Really? You think this is dignified at your age?"]
 
-const RADIO_CHOICES = [
+const SEX_CHOICES = [
     {
         id: 1,
         value: 'male',
@@ -27,6 +27,8 @@ const RADIO_CHOICES = [
         label: 'Yes, please!'
     },
 ]
+
+const LOOKING_FOR = ["Long Term", "Short Term", "One Night", "One Minute"]
 
 let userProfile = {
     username: "",
@@ -98,7 +100,7 @@ function ProfileForm(props) {
           <div className="form-group">
               <label htmlFor="sex">Sex:</label>
               <div className="radio">
-                {props.radio.map(function(button){
+                {props.sexOpts.map(function(button){
                   return <RadioButton key={button.id} button={button} />
                 })}
               </div>
@@ -106,12 +108,14 @@ function ProfileForm(props) {
           {/* Description */}
           <div className="form-group">
             <label htmlFor="description">Describe yourself in 3 syllables: </label>
-            <input type="text" id="description" value="Maybe check a dictionary to see how many syllables the thing is"/>
+            <input type="text" id="description" /> {/*http://api.datamuse.com/words?sp=hello&qe=sp&md=s&max=1*/}
           </div>
           {/* Looking For Checkboxes */}
           <div className="form-group">
             <label>Looking for: </label>
-            <div></div>
+            {props.lookingFor.map(function(box, i){
+                return <label key={i}>{box}: <input type="checkbox" name="looking-for" /></label>
+            })}
           </div>
 
         </form>
@@ -120,14 +124,15 @@ function ProfileForm(props) {
 
 ProfileForm.PropTypes = {
     ageOpts: React.PropTypes.array.isRequired,
-    radio: React.PropTypes.arrayOf(
+    sexOpts: React.PropTypes.arrayOf(
         React.PropTypes.shape({
             id: React.PropTypes.number.isRequired,
             name: React.PropTypes.string.isRequired,
             value: React.PropTypes.string.isRequired,
             label: React.PropTypes.string.isRequired
         })
-    ).isRequired
+    ).isRequired,
+    lookingFor: React.PropTypes.array.isRequired,
 }
 
 let Application = React.createClass({
@@ -136,14 +141,15 @@ let Application = React.createClass({
         quote: React.PropTypes.string,
         author: React.PropTypes.string,
         ageOpts: React.PropTypes.array,
-        radio: React.PropTypes.arrayOf(
+        sexOpts: React.PropTypes.arrayOf(
             React.PropTypes.shape({
                 id: React.PropTypes.number.isRequired,
                 name: React.PropTypes.string.isRequired,
                 value: React.PropTypes.string.isRequired,
                 label: React.PropTypes.string.isRequired
             })
-        )
+        ),
+        lookingFor: React.PropTypes.array,
     },
 
     getDefaultProps: function(){
@@ -151,7 +157,8 @@ let Application = React.createClass({
             quote: randomElem(QUOTES),
             author: randomElem(AUTHORS),
             ageOpts: AGE_CHOICES,
-            radio: RADIO_CHOICES
+            sexOpts: SEX_CHOICES,
+            lookingFor: LOOKING_FOR
         }
     },
 
@@ -165,7 +172,12 @@ let Application = React.createClass({
         return (
           <div>
               <Header quote={this.props.quote} author={this.props.author}/>
-              <ProfileForm ageOpts={this.props.ageOpts} radio={this.props.radio} userProfile={this.state.userProfile}/>
+              <ProfileForm
+                  ageOpts={this.props.ageOpts}
+                  sexOpts={this.props.sexOpts}
+                  lookingFor={this.props.lookingFor}
+                  userProfile={this.state.userProfile}
+              />
           </div>
         );
     }
