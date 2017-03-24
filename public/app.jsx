@@ -130,8 +130,6 @@ ProfileForm.PropTypes = {
     ).isRequired
 }
 
-
-
 let Application = React.createClass({
 
     propTypes: {
@@ -152,13 +150,14 @@ let Application = React.createClass({
         return {
             quote: randomElem(QUOTES),
             author: randomElem(AUTHORS),
-            ageOpts: AGE_CHOICES
+            ageOpts: AGE_CHOICES,
+            radio: RADIO_CHOICES
         }
     },
 
     getInitialState: function() {
         return {
-            radio: this.props.radio
+            userProfile: this.props.userProfile
         }
     },
 
@@ -166,11 +165,11 @@ let Application = React.createClass({
         return (
           <div>
               <Header quote={this.props.quote} author={this.props.author}/>
-              <ProfileForm ageOpts={this.props.ageOpts} radio={this.state.radio} />
+              <ProfileForm ageOpts={this.props.ageOpts} radio={this.props.radio} userProfile={this.state.userProfile}/>
           </div>
         );
     }
 })
 
 
-ReactDOM.render(<Application radio={RADIO_CHOICES}/>, document.getElementById('container'));
+ReactDOM.render(<Application userProfile={userProfile}/>, document.getElementById('container'));
