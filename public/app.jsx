@@ -151,38 +151,40 @@ function ProfileForm(props) {
     );
 }
 
+let Application = React.createClass({
 
-function Application(props) {
-  return (
-    <div>
-        <Header quote={props.quote} author={props.author}/>
-        <ProfileForm ageOpts={props.ageOpts} radio={props.radio} />
-    </div>
-  );
-}
+    propTypes: {
+        quote: React.PropTypes.string,
+        author: React.PropTypes.string,
+        ageOpts: React.PropTypes.array,
+        radio: React.PropTypes.arrayOf(
+            React.PropTypes.shape({
+                id: React.PropTypes.number.isRequired,
+                name: React.PropTypes.string.isRequired,
+                value: React.PropTypes.string.isRequired,
+                label: React.PropTypes.string.isRequired
+            })
+        )
+    },
 
-Application.propTypes = {
-    quote: React.PropTypes.string,
-    author: React.PropTypes.string,
-    ageOpts: React.PropTypes.array,
-    radio: React.PropTypes.arrayOf(
-        React.PropTypes.shape({
-            id: React.PropTypes.number.isRequired,
-            name: React.PropTypes.string.isRequired,
-            value: React.PropTypes.string.isRequired,
-            label: React.PropTypes.string.isRequired
-        })
-    )
-}
+    getDefaultProps: function(){
+        return {
+            quote: randomElem(QUOTES),
+            author: randomElem(AUTHORS),
+            ageOpts: AGE_CHOICES,
+            radio: RADIO_CHOICES
+        }
+    },
 
-Application.defaultProps = {
-    quote: randomElem(QUOTES),
-    author: randomElem(AUTHORS),
-    ageOpts: AGE_CHOICES,
-    radio: RADIO_CHOICES
-}
-
-
+    render: function() {
+        return (
+          <div>
+              <Header quote={this.props.quote} author={this.props.author}/>
+              <ProfileForm ageOpts={this.props.ageOpts} radio={this.props.radio} />
+          </div>
+        );
+    }
+})
 
 
 ReactDOM.render(<Application />, document.getElementById('container'));
