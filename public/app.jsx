@@ -28,6 +28,14 @@ const RADIO_CHOICES = [
     },
 ]
 
+let userProfile = {
+    username: "",
+    ageChoice: 0,
+    sexChoice: 0,
+    description: "",
+    lookingFor: [],
+}
+
 function randomElem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -46,66 +54,72 @@ Header.propTypes = {
     author: React.PropTypes.string.isRequired
 }
 
-function UserNameInput(){
-    return (
-        <div className="form-group">
-            <label htmlFor="username">Username:</label>
-            <input id="username" type="text"/>
-        </div>
-    );
-}
-
-function AgeInput(props){
-    return (
-        <div className="form-group">
-            <label htmlFor="age">Age: </label>
-            <select id="age">
-              {props.ageOpts.map(function(age, i) {
-                  return <option key={i}>{age}</option>
-              })}
-            </select>
-        </div>
-    );
-}
-
-AgeInput.propTypes = {
-    ageOpts: React.PropTypes.array.isRequired
-}
-
-
 function RadioButton(props) {
     return (
         <label>
-            <input type="radio" name={props.name} value={props.value}/>
-            {props.label}
+            <input type="radio" name={props.button.name} value={props.button.value}/>
+            {props.button.label}
         </label>
     );
 }
 
 RadioButton.propTypes = {
-    name: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired,
-    label: React.PropTypes.string.isRequired
+    button: React.PropTypes.shape({
+        id: React.PropTypes.number.isRequired,
+        name: React.PropTypes.string.isRequired,
+        value: React.PropTypes.string.isRequired,
+        label: React.PropTypes.string.isRequired
+    })
 }
 
-function SexInput(props) {
+
+function ProfileForm(props) {
     return (
-        <div className="form-group">
-            <label htmlFor="sex">Sex:</label>
-            <div className="radio">
-              {props.radio.map(function(button){
-                return <RadioButton
-                    key={button.id}
-                    name={button.name}
-                    value={button.value}
-                    label={button.label} />
-              })}
-            </div>
-        </div>
+        <form className="profileForm">
+          {/* Form title */}
+          <div className="form-group">
+            <h2>Make Your Profile!</h2>
+          </div>
+          {/* Username */}
+          <div className="form-group">
+              <label htmlFor="username">Username:</label>
+              <input id="username" type="text"/>
+          </div>
+          {/* Age group selection */}
+          <div className="form-group">
+              <label htmlFor="age">Age: </label>
+              <select id="age">
+                {props.ageOpts.map(function(age, i) {
+                    return <option key={i}>{age}</option>
+                })}
+              </select>
+          </div>
+          {/* Sex selection */}
+          <div className="form-group">
+              <label htmlFor="sex">Sex:</label>
+              <div className="radio">
+                {props.radio.map(function(button){
+                  return <RadioButton key={button.id} button={button} />
+                })}
+              </div>
+          </div>
+          {/* Description */}
+          <div className="form-group">
+            <label htmlFor="description">Describe yourself in 3 syllables: </label>
+            <input type="text" id="description" value="Maybe check a dictionary to see how many syllables the thing is"/>
+          </div>
+          {/* Looking For Checkboxes */}
+          <div className="form-group">
+            <label>Looking for: </label>
+            <div></div>
+          </div>
+
+        </form>
     );
 }
 
-SexInput.propTypes = {
+ProfileForm.PropTypes = {
+    ageOpts: React.PropTypes.array.isRequired,
     radio: React.PropTypes.arrayOf(
         React.PropTypes.shape({
             id: React.PropTypes.number.isRequired,
@@ -113,43 +127,10 @@ SexInput.propTypes = {
             value: React.PropTypes.string.isRequired,
             label: React.PropTypes.string.isRequired
         })
-    )
+    ).isRequired
 }
 
 
-function DescriptionInput() {
-    return (
-        <div className="form-group">
-          <label htmlFor="description">Describe yourself in 3 syllables: </label>
-          <input type="text" id="description" value="Maybe check a dictionary to see how many syllables the thing is"/>
-        </div>
-    );
-}
-
-function LookingFor() {
-    return (
-        <div className="form-group">
-          <label>Looking for: </label>
-          <div></div>
-        </div>
-    );
-}
-
-function ProfileForm(props) {
-    return (
-        <form className="profileForm">
-          <div className="form-group">
-            <h2>Make Your Profile!</h2>
-          </div>
-          <UserNameInput />
-          <AgeInput ageOpts={props.ageOpts} />
-          <SexInput radio={props.radio}/>
-          <DescriptionInput />
-          <LookingFor />
-
-        </form>
-    );
-}
 
 let Application = React.createClass({
 
@@ -171,8 +152,13 @@ let Application = React.createClass({
         return {
             quote: randomElem(QUOTES),
             author: randomElem(AUTHORS),
-            ageOpts: AGE_CHOICES,
-            radio: RADIO_CHOICES
+            ageOpts: AGE_CHOICES
+        }
+    },
+
+    getInitialState: function() {
+        return {
+            radio: this.props.radio
         }
     },
 
@@ -180,11 +166,11 @@ let Application = React.createClass({
         return (
           <div>
               <Header quote={this.props.quote} author={this.props.author}/>
-              <ProfileForm ageOpts={this.props.ageOpts} radio={this.props.radio} />
+              <ProfileForm ageOpts={this.props.ageOpts} radio={this.state.radio} />
           </div>
         );
     }
 })
 
 
-ReactDOM.render(<Application />, document.getElementById('container'));
+ReactDOM.render(<Application radio={RADIO_CHOICES}/>, document.getElementById('container'));
