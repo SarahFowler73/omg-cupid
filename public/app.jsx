@@ -1,10 +1,3 @@
-const QUOTES = [
-    "A date in the hand is worth two in the bush.",
-    "I'm a traditionalist; on a first date, Satan pays.",
-    "I like grapes."
-]
-const AUTHORS = ["Albert Einstein", "George Washington", "Oprah"]
-
 const AGE_CHOICES = ["Pick one:", "18-24", "25-29", "30-34", "Really? You think this is dignified at your age?"]
 
 const SEX_CHOICES = [
@@ -38,14 +31,9 @@ function Header(props) {
     return (
     <div className="w3-padding w3-block w3-theme-l1 w3-left-align">
       <h1>Welcome to OmgCupid!</h1>
-      <p><em>{props.quote}</em></p> <p>-- {props.author}</p>
+      <p><em>A simulated dating experience!</em></p>
     </div>
     );
-}
-
-Header.propTypes = {
-    quote: React.PropTypes.string.isRequired,
-    author: React.PropTypes.string.isRequired
 }
 
 function RadioButton(props) {
@@ -132,8 +120,6 @@ ProfileForm.PropTypes = {
 let Application = React.createClass({
 
     propTypes: {
-        quote: React.PropTypes.string,
-        author: React.PropTypes.string,
         ageOpts: React.PropTypes.array,
         sexOpts: React.PropTypes.arrayOf(
             React.PropTypes.shape({
@@ -155,8 +141,6 @@ let Application = React.createClass({
 
     getDefaultProps: function(){
         return {
-            quote: randomElem(QUOTES),
-            author: randomElem(AUTHORS),
             ageOpts: AGE_CHOICES,
             sexOpts: SEX_CHOICES,
             lookingFor: LOOKING_FOR
@@ -178,7 +162,7 @@ let Application = React.createClass({
     render: function() {
         return (
           <div>
-              <Header quote={this.props.quote} author={this.props.author}/>
+              <Header />
               <ProfileForm
                   ageOpts={this.props.ageOpts}
                   sexOpts={this.props.sexOpts}
@@ -193,7 +177,6 @@ let Application = React.createClass({
     },
 
     /* Application methods */
-
     setValue: function(event, field) {
         this.state.userProfile[field] = event.target.value;
         this.setState(this.state);
