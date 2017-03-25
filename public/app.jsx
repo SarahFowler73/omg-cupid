@@ -30,14 +30,6 @@ const SEX_CHOICES = [
 
 const LOOKING_FOR = ["Long Term", "Short Term", "One Night", "One Minute"]
 
-let userProfile = {
-    username: "",
-    ageChoice: 0,
-    sexChoice: 0,
-    description: "",
-    lookingFor: [],
-}
-
 function randomElem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -74,7 +66,6 @@ RadioButton.propTypes = {
     })
 }
 
-
 function ProfileForm(props) {
     return (
         <form className="profileForm">
@@ -85,12 +76,12 @@ function ProfileForm(props) {
           {/* Username */}
           <div className="form-group">
               <label htmlFor="username">Username:</label>
-              <input id="username" type="text"/>
+              <input id="username" type="text" onBlur={function(evt){props.setValue(evt, 'username')}}/>
           </div>
           {/* Age group selection */}
           <div className="form-group">
               <label htmlFor="age">Age: </label>
-              <select id="age">
+              <select id="age" onChange={function(evt){props.setValue(evt, 'ageChoice')}}>
                 {props.ageOpts.map(function(age, i) {
                     return <option key={i}>{age}</option>
                 })}
@@ -108,16 +99,16 @@ function ProfileForm(props) {
           {/* Description */}
           <div className="form-group">
             <label htmlFor="description">Describe yourself in 3 syllables: </label>
-            <input type="text" id="description" /> {/*http://api.datamuse.com/words?sp=hello&qe=sp&md=s&max=1*/}
+            <input type="text" id="description" onBlur={function(evt){props.checkDescription(evt)}}/>
           </div>
           {/* Looking For Checkboxes */}
           <div className="form-group">
             <label>Looking for: </label>
             {props.lookingFor.map(function(box, i){
-                return <label key={i}>{box}: <input type="checkbox" name="looking-for" /></label>
+                return <label key={i}>{box}: <input type="checkbox" name="looking-for" value={i} onChange={function(evt){props.setChoices(evt, 'lookingFor')}} /></label>
             })}
           </div>
-
+          <button type='submit' >Make My Profile!</button>
         </form>
     );
 }
@@ -133,6 +124,9 @@ ProfileForm.PropTypes = {
         })
     ).isRequired,
     lookingFor: React.PropTypes.array.isRequired,
+    setValue: React.PropTypes.func.isRequired,
+    setChoices: React.PropTypes.func.isRequired,
+    checkDescription: React.PropTypes.func.isRequired
 }
 
 let Application = React.createClass({
@@ -150,6 +144,13 @@ let Application = React.createClass({
             })
         ),
         lookingFor: React.PropTypes.array,
+        userProfile: React.PropTypes.shape({
+            username: React.PropTypes.string.isRequired,
+            ageChoice: React.PropTypes.string.isRequired,
+            sexChoice: React.PropTypes.string.isRequired,
+            description: React.PropTypes.string.isRequired,
+            lookingFor: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+        })
     },
 
     getDefaultProps: function(){
@@ -164,7 +165,13 @@ let Application = React.createClass({
 
     getInitialState: function() {
         return {
-            userProfile: this.props.userProfile
+            userProfile: {
+                username: "",
+                ageChoice: "",
+                sexChoice: "",
+                description: "",
+                lookingFor: [],
+            }
         }
     },
 
@@ -177,11 +184,37 @@ let Application = React.createClass({
                   sexOpts={this.props.sexOpts}
                   lookingFor={this.props.lookingFor}
                   userProfile={this.state.userProfile}
+                  setValue={this.setValue}
+                  setChoices={this.setChoices}
+                  checkDescription={this.checkDescription}
               />
           </div>
         );
+    },
+
+    /* Application methods */
+
+    setValue: function(event, field) {
+        this.state.userProfile[field] = event.target.value;
+        this.setState(this.state);
+    },
+
+    setChoices: function(choices, field) {
+        this.state.userProfile[field] = choices.length > 1 ? choices : choices[0];
+        this.setState(this.state);
+    },
+
+    checkDescription: function (event) {
+        /*http://api.datamuse.com/words?sp=hello&qe=sp&md=s&max=1*/
+        let numSyls = 3;
+        if (numSyls == 3) {
+            alert('Nice job! We\'ll add "can count" to your profile!');
+            this.setValue(event, 'description');
+        } else
+            alert("Uh. That's not three syllables.");
     }
+
 })
 
 
-ReactDOM.render(<Application userProfile={userProfile}/>, document.getElementById('container'));
+ReactDOM.render(<Application/>, document.getElementById('container'));
