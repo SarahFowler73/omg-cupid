@@ -36,7 +36,7 @@ function randomElem(arr) {
 
 function Header(props) {
     return (
-    <div>
+    <div className="w3-padding w3-block w3-theme-l1 w3-left-align">
       <h1>Welcome to OmgCupid!</h1>
       <p><em>{props.quote}</em></p> <p>-- {props.author}</p>
     </div>
@@ -52,7 +52,7 @@ function RadioButton(props) {
     return (
         <label>
             <input type="radio" name={props.button.name} value={props.button.value}/>
-            {props.button.label}
+            {" " + props.button.label}
         </label>
     );
 }
@@ -68,7 +68,7 @@ RadioButton.propTypes = {
 
 function ProfileForm(props) {
     return (
-        <form className="profileForm">
+        <form className="profileForm w3-card-2 w3-round w3-white">
           {/* Form title */}
           <div className="form-group">
             <h2>Make Your Profile!</h2>
@@ -108,7 +108,7 @@ function ProfileForm(props) {
                 return <label key={i}>{box}: <input type="checkbox" name="looking-for" value={i} onChange={function(evt){props.setChoices(evt, 'lookingFor')}} /></label>
             })}
           </div>
-          <button type='submit' >Make My Profile!</button>
+          <button type='submit' className="w3-margin">Make My Profile!</button>
         </form>
     );
 }

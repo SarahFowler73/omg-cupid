@@ -1,6 +1,6 @@
 #container {
     margin: auto;
-    max-width: 60%;
+    max-width: 50%;
     padding: 10px;
 }
 
@@ -11,4 +11,8 @@
 
 .profileForm label {
     display: block;
+}
+
+.form-group {
+    padding: 8px;
 }
