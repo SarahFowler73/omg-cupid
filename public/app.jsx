@@ -68,10 +68,7 @@ let ProfileForm = React.createClass({
                 label: React.PropTypes.string.isRequired
             })
         ).isRequired,
-        lookingFor: React.PropTypes.array.isRequired,
-        setValue: React.PropTypes.func.isRequired,
-        setChoices: React.PropTypes.func.isRequired,
-        checkDescription: React.PropTypes.func.isRequired
+        lookingFor: React.PropTypes.array.isRequired
     },
 
     getDefaultProps: function(){
@@ -95,11 +92,11 @@ let ProfileForm = React.createClass({
     },
 
     validateUsername: function(evt, value){
+        this.state[value] = evt.target.value;
         if (evt.target.value.match(/\s/)) {
             this.state.warning[value] = true;
         } else {
             this.state.warning[value] = false;
-            this.state[value] = evt.target.value;
         }
         this.setState(this.state);
     },
@@ -112,13 +109,19 @@ let ProfileForm = React.createClass({
                   {/* Username */}
                   <div className="form-group">
                       <label htmlFor="username">Username:</label>
-                      <input
-                          id="username"
-                          type="text"
-                          value={this.state.username}
-                          onChange={function(evt){this.validateUsername(evt, 'username')}.bind(this)}
-                      />
-                      <div className="warning" display={this.state.warning.username ? "block" : "none"}>NO SPACES!</div>
+                      <div className="popup">
+                          <input
+                              id="username"
+                              type="text"
+                              value={this.state.username}
+                              onChange={function(evt){this.validateUsername(evt, 'username')}.bind(this)}
+                          />
+                          <span
+                              className="popuptext"
+                              style={this.state.warning.username ? {display: "block"} : {display:"none"}}>
+                              No spaces!
+                          </span>
+                      </div>
                   </div>
                   {/* Age group selection */}
                   <div className="form-group">
