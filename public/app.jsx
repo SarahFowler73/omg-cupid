@@ -15,9 +15,9 @@ const SEX_CHOICES = [
     },
     {
         id: 3,
-        value: 'terrible',
+        value: 'other',
         name: 'sex',
-        label: 'Yes, please!'
+        label: 'Other'
     },
 ]
 
@@ -39,7 +39,7 @@ function Header(props) {
 function RadioButton(props) {
     return (
         <label>
-            <input type="radio" name={props.button.name} value={props.button.value}/>
+            <input type="radio" name={props.button.name} value={props.button.value} checked={props.checked}/>
             {" " + props.button.label}
         </label>
     );
@@ -52,6 +52,37 @@ RadioButton.propTypes = {
         value: React.PropTypes.string.isRequired,
         label: React.PropTypes.string.isRequired
     })
+}
+
+function UsernameField(props) {
+    return (
+        <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <div className="popup">
+                <input
+                    id="username"
+                    type="text"
+                    value={props.username}
+                    onChange={function(evt){props.validateInputText(evt, 'username')}}
+                />
+                <span className="popuptext" style={{display: props.display}}>
+                    No spaces!
+                </span>
+            </div>
+        </div>
+    );
+}
+
+UsernameField.propTypes = {
+    username: React.PropTypes.string.isRequired,
+    validateInputText: React.PropTypes.func.isRequired,
+    display: React.PropTypes.string.isRequired
+}
+
+function SexField(props) {
+    return (
+        null
+    );
 }
 
 
@@ -82,21 +113,28 @@ let ProfileForm = React.createClass({
     getInitialState: function() {
         return {
             username: "",
-            age: 0,
-            sex: 0,
+            age: "",
+            sex: "",
             description: "",
             lookingFor: [],
             canCount: false,
-            warning: {"username": false}
+            warning: {}
         }
     },
 
-    validateUsername: function(evt, value){
+    validateInputText: function(evt, value){
         this.state[value] = evt.target.value;
-        if (evt.target.value.match(/\s/)) {
-            this.state.warning[value] = true;
+        this.state.warning[value] = evt.target.value.match(/\s/); /* warn spaces */
+        this.setState(this.state);
+    },
+
+    validateSexChoice: function(evt) {
+        if (evt.target.value === 'other') {
+            this.state.warning['sex'] = true;
+            this.state.sex = "";
         } else {
-            this.state.warning[value] = false;
+            this.state.warning['sex'] = false;
+            this.state.sex = evt.target.value;
         }
         this.setState(this.state);
     },
@@ -107,22 +145,11 @@ let ProfileForm = React.createClass({
                 <h3>Make Your Profile!</h3>
                 <form className="profileForm" onSubmit="">
                   {/* Username */}
-                  <div className="form-group">
-                      <label htmlFor="username">Username:</label>
-                      <div className="popup">
-                          <input
-                              id="username"
-                              type="text"
-                              value={this.state.username}
-                              onChange={function(evt){this.validateUsername(evt, 'username')}.bind(this)}
-                          />
-                          <span
-                              className="popuptext"
-                              style={this.state.warning.username ? {display: "block"} : {display:"none"}}>
-                              No spaces!
-                          </span>
-                      </div>
-                  </div>
+                  <UsernameField
+                      username={this.state.username}
+                      validateInputText={this.validateInputText}
+                      display={this.state.warning.username ? "block" : "none"}
+                  />
                   {/* Age group selection */}
                   <div className="form-group">
                       <label htmlFor="age">Age: </label>
@@ -135,16 +162,32 @@ let ProfileForm = React.createClass({
                   {/* Sex selection */}
                   <div className="form-group">
                       <label htmlFor="sex">Sex:</label>
-                      <div className="radio" onChange={function(evt){this.setValue(evt, 'sex')}}>
+
+                      <div className="radio popup" onChange={function(evt){this.validateSexChoice(evt)}.bind(this)}>
                         {this.props.sexOpts.map(function(button){
-                          return <RadioButton key={button.id} button={button} />
-                        })}
+                          return <RadioButton
+                              key={button.id}
+                              button={button}
+                              checked={this.state.sex == button.value ? "checked" : ""}/>
+                        }.bind(this))}
+                        <span
+                            className="popuptext"
+                            style={this.state.warning.sex ? {display: "block"} : {display:"none"}}>
+                            Unfortunately, the only joke I have depends on binary sex choice. Sorry. {':('}
+                        </span>
                       </div>
                   </div>
                   {/* Description */}
                   <div className="form-group">
-                    <label htmlFor="description">Describe yourself in 3 syllables: </label>
-                    <input type="text" id="description" onBlur={function(evt){this.checkDescription(evt)}}/>
+                    <label htmlFor="description">Describe yourself using one three-syllable word: </label>
+                    <div className="popup">
+                        <input type="text" id="description" value={this.state.description} onChange={function(evt){this.validateInputText(evt, 'description')}.bind(this)}/>
+                        <span
+                            className="popuptext"
+                            style={this.state.warning.description ? {display: "block"} : {display:"none"}}>
+                            Just one word!
+                        </span>
+                    </div>
                   </div>
                   {/* Looking For Checkboxes */}
                   <div className="form-group">
