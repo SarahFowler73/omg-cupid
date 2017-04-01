@@ -81,11 +81,37 @@ UsernameField.propTypes = {
 
 function SexField(props) {
     return (
-        null
+        <div className="form-group">
+            <label htmlFor="sex">Sex:</label>
+
+            <div className="radio popup" onChange={function(evt){props.validateSexChoice(evt)}}>
+              {props.sexOpts.map(function(button){
+                return <RadioButton
+                    key={button.id}
+                    button={button}
+                    checked={props.whichChecked == button.value ? "checked" : ""}/>
+            })}
+              <span className="popuptext" style={{display: props.display}}>
+                  Unfortunately, the only joke I have depends on binary sex choice. Sorry. {':('}
+              </span>
+            </div>
+        </div>
     );
 }
 
-
+SexField.propTypes = {
+    sexOpts: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+            id: React.PropTypes.number.isRequired,
+            name: React.PropTypes.string.isRequired,
+            value: React.PropTypes.string.isRequired,
+            label: React.PropTypes.string.isRequired
+        })
+    ).isRequired,
+    validateSexChoice: React.PropTypes.func.isRequired,
+    display: React.PropTypes.string.isRequired,
+    whichChecked: React.PropTypes.string.isRequired
+}
 
 let ProfileForm = React.createClass({
 
@@ -144,7 +170,6 @@ let ProfileForm = React.createClass({
             <div id="profile-form" className="w3-card-2 w3-round w3-white w3-center w3-margin w3-padding">
                 <h3>Make Your Profile!</h3>
                 <form className="profileForm" onSubmit="">
-                  {/* Username */}
                   <UsernameField
                       username={this.state.username}
                       validateInputText={this.validateInputText}
@@ -159,24 +184,12 @@ let ProfileForm = React.createClass({
                         })}
                       </select>
                   </div>
-                  {/* Sex selection */}
-                  <div className="form-group">
-                      <label htmlFor="sex">Sex:</label>
-
-                      <div className="radio popup" onChange={function(evt){this.validateSexChoice(evt)}.bind(this)}>
-                        {this.props.sexOpts.map(function(button){
-                          return <RadioButton
-                              key={button.id}
-                              button={button}
-                              checked={this.state.sex == button.value ? "checked" : ""}/>
-                        }.bind(this))}
-                        <span
-                            className="popuptext"
-                            style={this.state.warning.sex ? {display: "block"} : {display:"none"}}>
-                            Unfortunately, the only joke I have depends on binary sex choice. Sorry. {':('}
-                        </span>
-                      </div>
-                  </div>
+                  <SexField
+                      sexOpts={this.props.sexOpts}
+                      validateSexChoice={this.validateSexChoice}
+                      display={this.state.warning.sex ? "block" : "none"}
+                      whichChecked={this.state.sex}
+                  />
                   {/* Description */}
                   <div className="form-group">
                     <label htmlFor="description">Describe yourself using one three-syllable word: </label>
