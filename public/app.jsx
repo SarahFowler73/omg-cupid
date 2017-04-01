@@ -54,29 +54,33 @@ RadioButton.propTypes = {
     })
 }
 
-function UsernameField(props) {
+function InputField(props) {
     return (
         <div className="form-group">
-            <label htmlFor="username">Username:</label>
+            <label htmlFor={props.name}>{props.label}:</label>
             <div className="popup">
                 <input
-                    id="username"
+                    id={props.name}
                     type="text"
-                    value={props.username}
-                    onChange={function(evt){props.validateInputText(evt, 'username')}}
+                    value={props.value}
+                    onChange={function(evt){props.validateInputText(evt, props.name)}}
                 />
                 <span className="popuptext" style={{display: props.display}}>
-                    No spaces!
+                    {props.warning}
                 </span>
             </div>
         </div>
     );
 }
 
-UsernameField.propTypes = {
-    username: React.PropTypes.string.isRequired,
+
+InputField.propTypes = {
+    name: React.PropTypes.string.isRequired,
+    value: React.PropTypes.string.isRequired,
+    label: React.PropTypes.string.isRequired,
     validateInputText: React.PropTypes.func.isRequired,
-    display: React.PropTypes.string.isRequired
+    display: React.PropTypes.string.isRequired,
+    warning: React.PropTypes.string.isRequired,
 }
 
 function SexField(props) {
@@ -170,46 +174,46 @@ let ProfileForm = React.createClass({
             <div id="profile-form" className="w3-card-2 w3-round w3-white w3-center w3-margin w3-padding">
                 <h3>Make Your Profile!</h3>
                 <form className="profileForm" onSubmit="">
-                  <UsernameField
-                      username={this.state.username}
-                      validateInputText={this.validateInputText}
-                      display={this.state.warning.username ? "block" : "none"}
-                  />
-                  {/* Age group selection */}
-                  <div className="form-group">
-                      <label htmlFor="age">Age: </label>
-                      <select id="age" onChange={function(evt){this.setValue(evt, 'age')}}>
-                        {this.props.ageOpts.map(function(age, i) {
-                            return <option key={i} value={i}>{age}</option>
-                        })}
-                      </select>
-                  </div>
-                  <SexField
-                      sexOpts={this.props.sexOpts}
-                      validateSexChoice={this.validateSexChoice}
-                      display={this.state.warning.sex ? "block" : "none"}
-                      whichChecked={this.state.sex}
-                  />
-                  {/* Description */}
-                  <div className="form-group">
-                    <label htmlFor="description">Describe yourself using one three-syllable word: </label>
-                    <div className="popup">
-                        <input type="text" id="description" value={this.state.description} onChange={function(evt){this.validateInputText(evt, 'description')}.bind(this)}/>
-                        <span
-                            className="popuptext"
-                            style={this.state.warning.description ? {display: "block"} : {display:"none"}}>
-                            Just one word!
-                        </span>
+                    <InputField
+                        name="username"
+                        label="Username"
+                        value={this.state.username}
+                        validateInputText={this.validateInputText}
+                        display={this.state.warning.username ? "block" : "none"}
+                        warning="No spaces in usernames!"
+                     />
+                    {/* Age group selection */}
+                    <div className="form-group">
+                        <label htmlFor="age">Age: </label>
+                        <select id="age" onChange={function(evt){this.setValue(evt, 'age')}}>
+                            {this.props.ageOpts.map(function(age, i) {
+                                return <option key={i} value={i}>{age}</option>
+                            })}
+                        </select>
                     </div>
-                  </div>
-                  {/* Looking For Checkboxes */}
-                  <div className="form-group">
+                    <SexField
+                        sexOpts={this.props.sexOpts}
+                        validateSexChoice={this.validateSexChoice}
+                        display={this.state.warning.sex ? "block" : "none"}
+                        whichChecked={this.state.sex}
+                    />
+
+                    <InputField
+                        name="description"
+                        label="Describe yourself using one three-syllable word"
+                        value={this.state.description}
+                        validateInputText={this.validateInputText}
+                        display={this.state.warning.description ? "block" : "none"}
+                        warning="Just one word!"
+                    />
+                    {/* Looking For Checkboxes */}
+                    <div className="form-group">
                     <label>Looking for: </label>
                     {this.props.lookingFor.map(function(box, i){
                         return <label key={i}>{box}: <input type="checkbox" name="lookingFor" value={i} onChange={function(evt){this.setChoices(evt, 'lookingFor')}} /></label>
                     })}
-                  </div>
-                  <input type='submit' className="w3-margin" value="Make My Profile!"/>
+                    </div>
+                    <input type='submit' className="w3-margin" value="Make My Profile!"/>
                 </form>
             </div>
         );
