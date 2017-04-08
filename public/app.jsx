@@ -73,7 +73,6 @@ function InputField(props) {
     );
 }
 
-
 InputField.propTypes = {
     name: React.PropTypes.string.isRequired,
     value: React.PropTypes.string.isRequired,
@@ -154,7 +153,7 @@ let ProfileForm = React.createClass({
 
     validateInputText: function(evt, value){
         this.state[value] = evt.target.value;
-        this.state.warning[value] = evt.target.value.match(/\s/); /* warn spaces */
+        this.state.warning[value] = /\s/.test(evt.target.value); /* warn spaces */
         this.setState(this.state);
     },
 
@@ -182,7 +181,6 @@ let ProfileForm = React.createClass({
                         display={this.state.warning.username ? "block" : "none"}
                         warning="No spaces in usernames!"
                      />
-                    {/* Age group selection */}
                     <div className="form-group">
                         <label htmlFor="age">Age: </label>
                         <select id="age" onChange={function(evt){this.setValue(evt, 'age')}}>
