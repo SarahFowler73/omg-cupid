@@ -245,6 +245,27 @@ let ProfileForm = React.createClass({
         this.setState(this.state);
     },
 
+    checkDescription: function (description) {
+
+        fetch('http://api.datamuse.com/words?sp=' + description + '&qe=sp&md=s&max=1')
+            .then(response => response.json())
+            .then(function (responseData) {
+
+                this.state.canCount = responseData.length && responseData[0].numSyllables === 3;
+                this.setState(this.state);
+            }.bind(this))
+    },
+
+    onSubmit: function(evt) {
+        evt.preventDefault();
+        if (this.state.warnings.length) {
+            alert('no');
+        } else {
+            this.checkDescription(this.state.description);
+
+        }
+    },
+
     render: function() {
         return (
             <div id="profile-form" className="w3-card-2 w3-round w3-white w3-center w3-margin w3-padding">
@@ -285,44 +306,18 @@ let ProfileForm = React.createClass({
                         validateLookingFor={this.validateLookingFor}
                         whichChecked={this.state.lookingFor.slice()}
                     />
-                    <input type='submit' className="w3-margin" value="Make My Profile!"/>
+                    <input
+                        type='submit'
+                        className="w3-margin"
+                        value="Make My Profile!"
+                        onClick={this.onSubmit}
+                    />
                 </form>
             </div>
         );
     },
 
-    setValue: function(event, field) {
-        this.state[field] = event.target.value;
-        this.setState(this.state);
-    },
 
-    setChoices: function(choice, field) {
-        // todo: this is fucking awful!
-        if (choice.target.checked) {
-            this.state[field].push(choice.target.value);
-        }else {
-            this.state[field].splice(
-                this.state[field].indexOf(choice.target.value),
-                1
-            );
-        }
-        this.setState(this.state);
-    },
-
-    checkDescription: function (event) {
-        /*http://api.datamuse.com/words?sp=hello&qe=sp&md=s&max=1*/
-        let numSyls = 3;
-        if (numSyls == 3) {
-            alert('Nice job! We\'ll add "can count" to your profile!');
-            this.setValue(event, 'description');
-
-        } else
-            alert("Uh. That's not three syllables.");
-    },
-    validateProfile: function() {
-        stuff = '';
-        console.log(stuff);
-    }
 })
 
 
