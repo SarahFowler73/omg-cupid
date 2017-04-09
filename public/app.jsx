@@ -116,6 +116,31 @@ SexField.propTypes = {
     whichChecked: React.PropTypes.string.isRequired
 }
 
+function LookingFor(props) {
+    return (
+        <div className="form-group">
+        <label>Looking for: </label>
+        {props.lookingFor.map(function(box, i){
+            return <label key={i}>{box}:
+                <input
+                    type="checkbox"
+                    name="lookingFor"
+                    value={i}
+                    onChange={function(evt){props.validateLookingFor(evt)}}
+                    checked={props.whichChecked.indexOf(String(i)) > -1 ? 'checked' : ''}
+                />
+            </label>
+        })}
+        </div>
+    );
+}
+
+LookingFor.propTypes = {
+    lookingFor: React.PropTypes.array.isRequired,
+    validateLookingFor: React.PropTypes.func.isRequired,
+    whichChecked: React.PropTypes.array.isRequired
+}
+
 let ProfileForm = React.createClass({
 
     propTypes: {
@@ -193,6 +218,14 @@ let ProfileForm = React.createClass({
         this.setState(this.state);
     },
 
+    validateLookingFor: function(evt) {
+        this.state.lookingFor = evt.target.checked ?
+            this.addToArray(evt.target.value, 'lookingFor')
+            :
+            this.removeFromArray(evt.target.value, 'lookingFor');
+        this.setState(this.state);
+    },
+
     render: function() {
         return (
             <div id="profile-form" className="w3-card-2 w3-round w3-white w3-center w3-margin w3-padding">
@@ -229,13 +262,11 @@ let ProfileForm = React.createClass({
                         display={this.existsInArray('description', 'warnings') ? "block" : "none"}
                         warning="Just one word!"
                     />
-                    {/* Looking For Checkboxes */}
-                    <div className="form-group">
-                    <label>Looking for: </label>
-                    {this.props.lookingFor.map(function(box, i){
-                        return <label key={i}>{box}: <input type="checkbox" name="lookingFor" value={i} onChange={function(evt){this.setChoices(evt, 'lookingFor')}} /></label>
-                    })}
-                    </div>
+                    <LookingFor
+                        lookingFor={this.props.lookingFor}
+                        validateLookingFor={this.validateLookingFor}
+                        whichChecked={this.state.lookingFor.slice()}
+                    />
                     <input type='submit' className="w3-margin" value="Make My Profile!"/>
                 </form>
             </div>
