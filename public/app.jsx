@@ -152,36 +152,42 @@ let ProfileForm = React.createClass({
         }
     },
 
-    warningExists: function(value) {
-        return this.state.warnings.filter(function (val) {return val == value});
+    existsInArray: function(value, stateArrayKey) {
+        return this.state[stateArrayKey].filter(function (val) {return val == value}).length;
     },
 
-    addWarning: function(value) {
-        let warnings = this.state.warnings.splice();
-        warnings.push(value);
-        return warnings;
+    addToArray: function(value, stateArrayKey) {
+        let arr = this.state[stateArrayKey].slice();
+        if (!this.existsInArray(value, stateArrayKey))
+            arr.push(value);
+        return arr;
     },
 
-    removeWarning: function(value) {
-        let warnings = this.state.warnings.splice();
-        warnings.pop(warnings.indexOf(value));
-        return warnings;
+    removeFromArray: function(value, stateArrayKey) {
+        let arr = this.state[stateArrayKey].slice();
+        if (this.existsInArray(value, stateArrayKey))
+            arr.splice(arr.indexOf(value), 1);
+        return arr;
     },
 
     validateInputText: function(evt, value){
         this.state[value] = evt.target.value; /* set the value */
 
-        /* Handle warnings */
-        this.state.warnings = /\s/.test(evt.target.value) ? this.addWarning(value) : this.removeWarning(value); /* warn spaces */
+        /* Handle warnings for spaces */
+        this.state.warnings = /\s/.test(evt.target.value)
+            ?
+            this.addToArray(value, 'warnings')
+            :
+            this.removeFromArray(value, 'warnings');
         this.setState(this.state);
     },
 
     validateSexChoice: function(evt) {
         if (evt.target.value === 'other') {
-            this.state.warning['sex'] = true;
+            this.state.warnings = this.addToArray('sex', 'warnings')
             this.state.sex = "";
         } else {
-            this.state.warning['sex'] = false;
+            this.state.warnings = this.removeFromArray('sex', 'warnings');
             this.state.sex = evt.target.value;
         }
         this.setState(this.state);
@@ -197,7 +203,7 @@ let ProfileForm = React.createClass({
                         label="Username"
                         value={this.state.username}
                         validateInputText={this.validateInputText}
-                        display={this.warningExists('username').length ? "block" : "none"}
+                        display={this.existsInArray('username', 'warnings') ? "block" : "none"}
                         warning="No spaces in usernames!"
                      />
                     <div className="form-group">
@@ -211,7 +217,7 @@ let ProfileForm = React.createClass({
                     <SexField
                         sexOpts={this.props.sexOpts}
                         validateSexChoice={this.validateSexChoice}
-                        display={this.state.warning.sex ? "block" : "none"}
+                        display={this.existsInArray('sex', 'warnings') ? "block" : "none"}
                         whichChecked={this.state.sex}
                     />
 
@@ -220,7 +226,7 @@ let ProfileForm = React.createClass({
                         label="Describe yourself using one three-syllable word"
                         value={this.state.description}
                         validateInputText={this.validateInputText}
-                        display={this.warningExists('description').length ? "block" : "none"}
+                        display={this.existsInArray('description', 'warnings') ? "block" : "none"}
                         warning="Just one word!"
                     />
                     {/* Looking For Checkboxes */}
