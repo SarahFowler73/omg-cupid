@@ -147,13 +147,32 @@ let ProfileForm = React.createClass({
             description: "",
             lookingFor: [],
             canCount: false,
-            warning: {}
+            warning: {},
+            warnings: []
         }
     },
 
+    warningExists: function(value) {
+        return this.state.warnings.filter(function (val) {return val == value});
+    },
+
+    addWarning: function(value) {
+        let warnings = this.state.warnings.splice();
+        warnings.push(value);
+        return warnings;
+    },
+
+    removeWarning: function(value) {
+        let warnings = this.state.warnings.splice();
+        warnings.pop(warnings.indexOf(value));
+        return warnings;
+    },
+
     validateInputText: function(evt, value){
-        this.state[value] = evt.target.value;
-        this.state.warning[value] = /\s/.test(evt.target.value); /* warn spaces */
+        this.state[value] = evt.target.value; /* set the value */
+
+        /* Handle warnings */
+        this.state.warnings = /\s/.test(evt.target.value) ? this.addWarning(value) : this.removeWarning(value); /* warn spaces */
         this.setState(this.state);
     },
 
@@ -178,7 +197,7 @@ let ProfileForm = React.createClass({
                         label="Username"
                         value={this.state.username}
                         validateInputText={this.validateInputText}
-                        display={this.state.warning.username ? "block" : "none"}
+                        display={this.warningExists('username').length ? "block" : "none"}
                         warning="No spaces in usernames!"
                      />
                     <div className="form-group">
@@ -201,7 +220,7 @@ let ProfileForm = React.createClass({
                         label="Describe yourself using one three-syllable word"
                         value={this.state.description}
                         validateInputText={this.validateInputText}
-                        display={this.state.warning.description ? "block" : "none"}
+                        display={this.warningExists('description').length ? "block" : "none"}
                         warning="Just one word!"
                     />
                     {/* Looking For Checkboxes */}
@@ -246,7 +265,8 @@ let ProfileForm = React.createClass({
             alert("Uh. That's not three syllables.");
     },
     validateProfile: function() {
-
+        stuff =
+        console.log(stuff);
     }
 })
 
