@@ -1,4 +1,4 @@
-const AGE_CHOICES = ["Pick one:", "18-24", "25-29", "30-34", "Really? You think this is dignified at your age?"]
+const AGE_CHOICES = ["Pick one:", "18-24", "25-29", "30-34", "35+"]
 
 const SEX_CHOICES = [
     {
@@ -82,21 +82,40 @@ InputField.propTypes = {
     warning: React.PropTypes.string.isRequired,
 }
 
+function AgeField(props) {
+    return (
+        <div className="form-group">
+            <label htmlFor="age">Age: </label>
+            <div className="popup">
+                <select id="age" onChange={function(evt){props.validateAgeChoice(evt, 'age')}}>
+                    {props.ageOpts.map(function(age, i) {
+                        return i === 0 ?
+                             <option key={i} value={age} selected disabled>{age}</option>
+                            :
+                             <option key={i} value={age}>{age}</option>
+
+                    })}
+
+                </select>
+                <span className="popuptext" style={{display: props.display}}>{props.warning}</span>
+            </div>
+        </div>
+    );
+}
+
 function SexField(props) {
     return (
         <div className="form-group">
             <label htmlFor="sex">Sex:</label>
 
-            <div className="radio popup" onChange={function(evt){props.validateSexChoice(evt)}}>
+            <div className="radio popup" onChange={function(evt){props.validateSexChoice(evt, 'sex')}}>
               {props.sexOpts.map(function(button){
                 return <RadioButton
                     key={button.id}
                     button={button}
                     checked={props.whichChecked == button.value ? "checked" : ""}/>
             })}
-              <span className="popuptext" style={{display: props.display}}>
-                  Unfortunately, the only joke I have depends on binary sex choice. Sorry. {':('}
-              </span>
+              <span className="popuptext" style={{display: props.display}}>{props.warning}</span>
             </div>
         </div>
     );
@@ -172,7 +191,6 @@ let ProfileForm = React.createClass({
             description: "",
             lookingFor: [],
             canCount: false,
-            warning: {},
             warnings: []
         }
     },
@@ -207,13 +225,14 @@ let ProfileForm = React.createClass({
         this.setState(this.state);
     },
 
-    validateSexChoice: function(evt) {
-        if (evt.target.value === 'other') {
-            this.state.warnings = this.addToArray('sex', 'warnings')
-            this.state.sex = "";
+    validateAgeSexChoice: function(evt, component) {
+        let toCheck = component === 'sex' ? 'other' : '35+'
+        if (evt.target.value === toCheck) {
+            this.state.warnings = this.addToArray(component, 'warnings');
+            this.state[component] = "";
         } else {
-            this.state.warnings = this.removeFromArray('sex', 'warnings');
-            this.state.sex = evt.target.value;
+            this.state.warnings = this.removeFromArray(component, 'warnings');
+            this.state[component] = evt.target.value;
         }
         this.setState(this.state);
     },
@@ -239,19 +258,18 @@ let ProfileForm = React.createClass({
                         display={this.existsInArray('username', 'warnings') ? "block" : "none"}
                         warning="No spaces in usernames!"
                      />
-                    <div className="form-group">
-                        <label htmlFor="age">Age: </label>
-                        <select id="age" onChange={function(evt){this.setValue(evt, 'age')}}>
-                            {this.props.ageOpts.map(function(age, i) {
-                                return <option key={i} value={i}>{age}</option>
-                            })}
-                        </select>
-                    </div>
+                    <AgeField
+                        ageOpts={this.props.ageOpts}
+                        validateAgeChoice={this.validateAgeSexChoice}
+                        display={this.existsInArray('age', 'warnings') ? "block" : "none"}
+                        warning={"Ew. No one wants to think about old people dating. Go away."}
+                    />
                     <SexField
                         sexOpts={this.props.sexOpts}
-                        validateSexChoice={this.validateSexChoice}
+                        validateSexChoice={this.validateAgeSexChoice}
                         display={this.existsInArray('sex', 'warnings') ? "block" : "none"}
                         whichChecked={this.state.sex}
+                        warning={"Unfortunately, the only joke I have depends on binary sex choice. Sorry. :("}
                     />
 
                     <InputField
@@ -302,7 +320,7 @@ let ProfileForm = React.createClass({
             alert("Uh. That's not three syllables.");
     },
     validateProfile: function() {
-        stuff =
+        stuff = '';
         console.log(stuff);
     }
 })
