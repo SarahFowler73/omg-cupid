@@ -2,6 +2,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var PropTypes = require('prop-types');
+var createReactClass = require('create-react-class');
 
 const AGE_CHOICES = ['Pick one:', '18-24', '25-29', '30-34', '35+'];
 
@@ -146,7 +147,7 @@ LookingFor.propTypes = {
     whichChecked: PropTypes.array.isRequired,
   };
 
-let ProfileForm = React.createClass({
+let ProfileForm = createReactClass({
 
     propTypes: {
         ageOpts: PropTypes.array.isRequired,
@@ -314,7 +315,7 @@ let ProfileForm = React.createClass({
 
   });
 
-let Application = React.createClass({
+let Application = createReactClass({
 
     propTypes: {
         userProfile: PropTypes.shape({

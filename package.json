@@ -4,6 +4,7 @@
   "description": "A Simulated Dating Experience (so I can learn React)",
   "main": "index.js",
   "dependencies": {
+    "create-react-class": "^15.5.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
