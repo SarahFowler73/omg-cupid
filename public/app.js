@@ -1,6 +1,7 @@
 // Libs
 var React = require('react');
 var ReactDOM = require('react-dom');
+var PropTypes = require('prop-types');
 
 const AGE_CHOICES = ['Pick one:', '18-24', '25-29', '30-34', '35+'];
 
@@ -31,10 +32,10 @@ function RadioButton(props) {
 }
 
 RadioButton.propTypes = {
-    name: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired,
-    label: React.PropTypes.string.isRequired,
-    checked: React.PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    checked: PropTypes.string.isRequired,
   };
 
 function InputField(props) {
@@ -48,7 +49,7 @@ function InputField(props) {
                   value={props.value}
                   onChange={function (evt) { props.validateInputText(evt, props.name); }}
                 />
-                <span className='popuptext' style={{display: props.display}}>
+                <span className='popuptext' style={{ display: props.display }}>
                     {props.warning}
                 </span>
             </div>
@@ -57,12 +58,12 @@ function InputField(props) {
 }
 
 InputField.propTypes = {
-    name: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired,
-    label: React.PropTypes.string.isRequired,
-    validateInputText: React.PropTypes.func.isRequired,
-    display: React.PropTypes.string.isRequired,
-    warning: React.PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    validateInputText: PropTypes.func.isRequired,
+    display: PropTypes.string.isRequired,
+    warning: PropTypes.string.isRequired,
   };
 
 function AgeField(props) {
@@ -74,7 +75,7 @@ function AgeField(props) {
                         onChange={function (evt) { props.validateAgeChoice(evt, 'age'); }}
                 >
                     {props.ageOpts.map(function (age, i) {
-                      return i === 0 
+                      return i === 0
                          ?
                            <option key={i} value={age} selected disabled>{age}</option>
                           :
@@ -83,7 +84,7 @@ function AgeField(props) {
                     })}
 
                 </select>
-                <span className='popuptext' style={{display: props.display}}>
+                <span className='popuptext' style={{ display: props.display }}>
                     {props.warning}
                 </span>
             </div>
@@ -107,17 +108,17 @@ function SexField(props) {
                   value={opt.toLowerCase()}
                   checked={props.whichChecked == opt.toLowerCase() ? 'checked' : ''}/>;
             })}
-              <span className='popuptext' style={{display: props.display}}>{props.warning}</span>
+              <span className='popuptext' style={{ display: props.display }}>{props.warning}</span>
             </div>
         </div>
   );
 }
 
 SexField.propTypes = {
-    sexOpts: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    validateSexChoice: React.PropTypes.func.isRequired,
-    display: React.PropTypes.string.isRequired,
-    whichChecked: React.PropTypes.string.isRequired,
+    sexOpts: PropTypes.arrayOf(PropTypes.string).isRequired,
+    validateSexChoice: PropTypes.func.isRequired,
+    display: PropTypes.string.isRequired,
+    whichChecked: PropTypes.string.isRequired,
   };
 
 function LookingFor(props) {
@@ -140,18 +141,18 @@ function LookingFor(props) {
 }
 
 LookingFor.propTypes = {
-    lookingFor: React.PropTypes.array.isRequired,
-    validateLookingFor: React.PropTypes.func.isRequired,
-    whichChecked: React.PropTypes.array.isRequired
+    lookingFor: PropTypes.array.isRequired,
+    validateLookingFor: PropTypes.func.isRequired,
+    whichChecked: PropTypes.array.isRequired,
   };
 
 let ProfileForm = React.createClass({
 
     propTypes: {
-        ageOpts: React.PropTypes.array.isRequired,
-        sexOpts: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-        lookingFor: React.PropTypes.array.isRequired,
-        submitForm: React.PropTypes.func.isRequired
+        ageOpts: PropTypes.array.isRequired,
+        sexOpts: PropTypes.arrayOf(PropTypes.string).isRequired,
+        lookingFor: PropTypes.array.isRequired,
+        submitForm: PropTypes.func.isRequired,
       },
 
     getDefaultProps: function () {
@@ -316,12 +317,12 @@ let ProfileForm = React.createClass({
 let Application = React.createClass({
 
     propTypes: {
-        userProfile: React.PropTypes.shape({
-            username: React.PropTypes.string.isRequired,
-            ageChoice: React.PropTypes.string.isRequired,
-            sexChoice: React.PropTypes.string.isRequired,
-            description: React.PropTypes.string.isRequired,
-            lookingFor: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+        userProfile: PropTypes.shape({
+            username: PropTypes.string.isRequired,
+            ageChoice: PropTypes.string.isRequired,
+            sexChoice: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            lookingFor: PropTypes.arrayOf(PropTypes.string).isRequired,
           }),
       },
 
