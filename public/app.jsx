@@ -1,25 +1,6 @@
 const AGE_CHOICES = ["Pick one:", "18-24", "25-29", "30-34", "35+"]
 
-const SEX_CHOICES = [
-    {
-        id: 1,
-        value: 'male',
-        name: 'sex',
-        label: 'Male'
-    },
-    {
-        id: 2,
-        value: 'female',
-        name: 'sex',
-        label: 'Female'
-    },
-    {
-        id: 3,
-        value: 'other',
-        name: 'sex',
-        label: 'Other'
-    },
-]
+const SEX_CHOICES = ['Male', 'Female', 'Other']
 
 const LOOKING_FOR = ["Long Term", "Short Term", "One Night", "One Minute"]
 
@@ -39,19 +20,17 @@ function Header(props) {
 function RadioButton(props) {
     return (
         <label>
-            <input type="radio" name={props.button.name} value={props.button.value} checked={props.checked}/>
-            {" " + props.button.label}
+            <input type="radio" name={props.name} value={props.value} checked={props.checked}/>
+            {" " + props.label}
         </label>
     );
 }
 
 RadioButton.propTypes = {
-    button: React.PropTypes.shape({
-        id: React.PropTypes.number.isRequired,
-        name: React.PropTypes.string.isRequired,
-        value: React.PropTypes.string.isRequired,
-        label: React.PropTypes.string.isRequired
-    })
+    name: React.PropTypes.string.isRequired,
+    value: React.PropTypes.string.isRequired,
+    label: React.PropTypes.string.isRequired,
+    checked: React.PropTypes.string.isRequired
 }
 
 function InputField(props) {
@@ -109,11 +88,13 @@ function SexField(props) {
             <label htmlFor="sex">Sex:</label>
 
             <div className="radio popup" onChange={function(evt){props.validateSexChoice(evt, 'sex')}}>
-              {props.sexOpts.map(function(button){
+              {props.sexOpts.map(function(opt, i){
                 return <RadioButton
-                    key={button.id}
-                    button={button}
-                    checked={props.whichChecked == button.value ? "checked" : ""}/>
+                    key={i}
+                    name='sex'
+                    label={opt}
+                    value={opt.toLowerCase()}
+                    checked={props.whichChecked == opt.toLowerCase() ? "checked" : ""}/>
             })}
               <span className="popuptext" style={{display: props.display}}>{props.warning}</span>
             </div>
@@ -122,14 +103,7 @@ function SexField(props) {
 }
 
 SexField.propTypes = {
-    sexOpts: React.PropTypes.arrayOf(
-        React.PropTypes.shape({
-            id: React.PropTypes.number.isRequired,
-            name: React.PropTypes.string.isRequired,
-            value: React.PropTypes.string.isRequired,
-            label: React.PropTypes.string.isRequired
-        })
-    ).isRequired,
+    sexOpts: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
     validateSexChoice: React.PropTypes.func.isRequired,
     display: React.PropTypes.string.isRequired,
     whichChecked: React.PropTypes.string.isRequired
@@ -164,14 +138,7 @@ let ProfileForm = React.createClass({
 
     propTypes: {
         ageOpts: React.PropTypes.array.isRequired,
-        sexOpts: React.PropTypes.arrayOf(
-            React.PropTypes.shape({
-                id: React.PropTypes.number.isRequired,
-                name: React.PropTypes.string.isRequired,
-                value: React.PropTypes.string.isRequired,
-                label: React.PropTypes.string.isRequired
-            })
-        ).isRequired,
+        sexOpts: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
         lookingFor: React.PropTypes.array.isRequired
     },
 
@@ -267,7 +234,7 @@ let ProfileForm = React.createClass({
     onSubmit: function(evt) {
         evt.preventDefault();
         if (this.state.warnings.length || this.checkMissing()) {
-            alert('no');
+            alert('You have invalid or empty values in your profile!');
         } else {
             this.checkDescription(this.state.description);
 
