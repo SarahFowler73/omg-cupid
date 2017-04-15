@@ -247,7 +247,7 @@ let ProfileForm = React.createClass({
 
     checkDescription: function (description) {
 
-        fetch('http://api.datamuse.com/words?sp=' + description + '&qe=sp&md=s&max=1')
+        fetch(`http://api.datamuse.com/words?sp=${description}&qe=sp&md=s&max=1`)
             .then(response => response.json())
             .then(function (responseData) {
 
@@ -256,9 +256,17 @@ let ProfileForm = React.createClass({
             }.bind(this))
     },
 
+    checkMissing: function() {
+        // Return true if not all values are filled out
+        // minus warnings and canCount
+        return Object.values(this.state).filter(
+            function (val){return val && val.length}
+        ).length < Object.values(this.state).length - 2;
+    },
+
     onSubmit: function(evt) {
         evt.preventDefault();
-        if (this.state.warnings.length) {
+        if (this.state.warnings.length || this.checkMissing()) {
             alert('no');
         } else {
             this.checkDescription(this.state.description);
