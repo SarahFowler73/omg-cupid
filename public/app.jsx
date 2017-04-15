@@ -43,7 +43,6 @@ function InputField(props) {
                     type="text"
                     value={props.value}
                     onChange={function(evt){props.validateInputText(evt, props.name)}}
-                    onBlur={function(){props.onBlur(props.value)}}
                 />
                 <span className="popuptext" style={{display: props.display}}>
                     {props.warning}
@@ -236,9 +235,10 @@ let ProfileForm = React.createClass({
     validateProfile: function(evt, props) {
         evt.preventDefault();
         if (this.state.warnings.length || this.checkMissing()) {
-            alert('You have invalid or empty values in your profile!')
+            alert('You have invalid or empty values in your profile!');
         } else {
-            this.props.submitForm(this.state)
+            this.checkDescription(this.state.description);
+            this.props.submitForm(this.state);
         }
 
     },
@@ -255,7 +255,6 @@ let ProfileForm = React.createClass({
                         validateInputText={this.validateInputText}
                         display={this.existsInArray('username', 'warnings') ? "block" : "none"}
                         warning="No spaces in usernames!"
-                        onBlur={function(){}}
                      />
                     <AgeField
                         ageOpts={this.props.ageOpts}
@@ -278,7 +277,6 @@ let ProfileForm = React.createClass({
                         validateInputText={this.validateInputText}
                         display={this.existsInArray('description', 'warnings') ? "block" : "none"}
                         warning="Just one word!"
-                        onBlur={this.checkDescription}
                     />
                     <LookingFor
                         lookingFor={this.props.lookingFor}
@@ -338,8 +336,8 @@ let Application = React.createClass({
 
     makeProfile: function(profileObj) {
         this.state.userProfile.username = profileObj.username;
-        this.state.userProfile.ageChoice = profileObj.ageChoice;
-        this.state.userProfile.sexChoice = profileObj.sexChoice;
+        this.state.userProfile.ageChoice = profileObj.age;
+        this.state.userProfile.sexChoice = profileObj.sex;
         this.state.userProfile.description = profileObj.description;
         this.state.userProfile.lookingFor = profileObj.lookingFor.map(idx => LOOKING_FOR[parseInt(idx)]) ;
         this.state.userProfile.canCount = profileObj.canCount;
