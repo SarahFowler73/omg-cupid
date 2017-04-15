@@ -43,6 +43,7 @@ function InputField(props) {
                     type="text"
                     value={props.value}
                     onChange={function(evt){props.validateInputText(evt, props.name)}}
+                    onBlur={function(){props.onBlur(props.value)}}
                 />
                 <span className="popuptext" style={{display: props.display}}>
                     {props.warning}
@@ -139,7 +140,8 @@ let ProfileForm = React.createClass({
     propTypes: {
         ageOpts: React.PropTypes.array.isRequired,
         sexOpts: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-        lookingFor: React.PropTypes.array.isRequired
+        lookingFor: React.PropTypes.array.isRequired,
+        submitForm: React.PropTypes.func.isRequired
     },
 
     getDefaultProps: function(){
@@ -231,21 +233,21 @@ let ProfileForm = React.createClass({
         ).length < Object.values(this.state).length - 2;
     },
 
-    onSubmit: function(evt) {
+    validateProfile: function(evt, props) {
         evt.preventDefault();
         if (this.state.warnings.length || this.checkMissing()) {
-            alert('You have invalid or empty values in your profile!');
+            alert('You have invalid or empty values in your profile!')
         } else {
-            this.checkDescription(this.state.description);
-
+            this.props.submitForm(this.state)
         }
+
     },
 
     render: function() {
         return (
             <div id="profile-form" className="w3-card-2 w3-round w3-white w3-center w3-margin w3-padding">
                 <h3>Make Your Profile!</h3>
-                <form className="profileForm" onSubmit="">
+                <form className="profileForm">
                     <InputField
                         name="username"
                         label="Username"
@@ -253,6 +255,7 @@ let ProfileForm = React.createClass({
                         validateInputText={this.validateInputText}
                         display={this.existsInArray('username', 'warnings') ? "block" : "none"}
                         warning="No spaces in usernames!"
+                        onBlur={function(){}}
                      />
                     <AgeField
                         ageOpts={this.props.ageOpts}
@@ -275,6 +278,7 @@ let ProfileForm = React.createClass({
                         validateInputText={this.validateInputText}
                         display={this.existsInArray('description', 'warnings') ? "block" : "none"}
                         warning="Just one word!"
+                        onBlur={this.checkDescription}
                     />
                     <LookingFor
                         lookingFor={this.props.lookingFor}
@@ -285,7 +289,7 @@ let ProfileForm = React.createClass({
                         type='submit'
                         className="w3-margin"
                         value="Make My Profile!"
-                        onClick={this.onSubmit}
+                        onClick={this.validateProfile}
                     />
                 </form>
             </div>
@@ -325,12 +329,23 @@ let Application = React.createClass({
         return (
           <div>
               <Header />
-              <ProfileForm />
+              <ProfileForm submitForm={this.makeProfile}/>
           </div>
         );
     },
 
     /* Application methods */
+
+    makeProfile: function(profileObj) {
+        this.state.userProfile.username = profileObj.username;
+        this.state.userProfile.ageChoice = profileObj.ageChoice;
+        this.state.userProfile.sexChoice = profileObj.sexChoice;
+        this.state.userProfile.description = profileObj.description;
+        this.state.userProfile.lookingFor = profileObj.lookingFor.map(idx => LOOKING_FOR[parseInt(idx)]) ;
+        this.state.userProfile.canCount = profileObj.canCount;
+
+        this.setState(this.state);
+    }
 
 })
 
