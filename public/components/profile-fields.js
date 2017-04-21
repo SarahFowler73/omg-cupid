@@ -110,9 +110,9 @@ export function LookingFor(props) {
                 <input
                   type='checkbox'
                   name='lookingFor'
-                  value={i}
+                  value={box}
                   onChange={function (evt) {props.validateLookingFor(evt);}}
-                  checked={props.whichChecked.indexOf(String(i)) > -1 ? 'checked' : ''}
+                  checked={props.whichChecked.indexOf(box) > -1 ? 'checked' : ''}
               />
             </label>;
         })}

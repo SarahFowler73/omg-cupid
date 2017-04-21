@@ -58,9 +58,7 @@ let Application = createReactClass({
         this.state.userProfile.ageChoice = profileObj.age;
         this.state.userProfile.sexChoice = profileObj.sex;
         this.state.userProfile.description = profileObj.description;
-        this.state.userProfile.lookingFor = profileObj.lookingFor.map(
-            idx => LOOKING_FOR[parseInt(idx)]
-        );
+        this.state.userProfile.lookingFor = profileObj.lookingFor;
         this.state.userProfile.canCount = profileObj.canCount;
 
         this.setState(this.state);
