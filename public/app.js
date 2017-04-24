@@ -1,17 +1,11 @@
 // Libs
 var React = require('react');
-var ReactDOM = require('react-dom');
+import { render } from 'react-dom';
 var PropTypes = require('prop-types');
 var createReactClass = require('create-react-class');
 
 import { Header } from './components/header';
 import ProfileForm from './components/profile-form';
-
-const AGE_CHOICES = ['Pick one:', '18-24', '25-29', '30-34', '35+'];
-
-const SEX_CHOICES = ['Male', 'Female', 'Other'];
-
-const LOOKING_FOR = ['Long Term', 'Short Term', 'One Night', 'One Minute'];
 
 function randomElem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -66,4 +60,4 @@ let Application = createReactClass({
 
   });
 
-ReactDOM.render(<Application/>, document.getElementById('container'));
+render(<Application/>, document.getElementById('container'));

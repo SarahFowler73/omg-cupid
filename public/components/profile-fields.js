@@ -1,5 +1,4 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
 var PropTypes = require('prop-types');
 
 export function RadioButton(props) {
