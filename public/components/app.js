@@ -1,14 +1,11 @@
 // Libs
 import React from 'react';
-import { render } from 'react-dom';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 
-import { Router, Route } from 'react-router';
-
 // Components
-import { Header } from './components/header';
-import ProfileForm from './components/profile-form';
+import { Header } from './header';
+import ProfileForm from './profile-form';
 
 function randomElem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -63,4 +60,4 @@ let Application = createReactClass({
 
   });
 
-render(<Application/>, document.getElementById('container'));
+export default Application;
