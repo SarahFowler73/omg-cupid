@@ -1,9 +1,12 @@
 // Libs
-var React = require('react');
+import React from 'react';
 import { render } from 'react-dom';
-var PropTypes = require('prop-types');
-var createReactClass = require('create-react-class');
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
+import { Router, Route } from 'react-router';
+
+// Components
 import { Header } from './components/header';
 import ProfileForm from './components/profile-form';
 

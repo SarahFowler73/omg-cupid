@@ -1,13 +1,12 @@
-var React = require('react');
-var createReactClass = require('create-react-class');
-var PropTypes = require('prop-types');
+// Libs
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 import { RadioButton, InputField, AgeField, SexField, LookingFor } from './profile-fields';
 
 const AGE_CHOICES = ['Pick one:', '18-24', '25-29', '30-34', '35+'];
-
 const SEX_CHOICES = ['Male', 'Female', 'Other'];
-
 const LOOKING_FOR = ['Long Term', 'Short Term', 'One Night', 'One Minute'];
 
 let ProfileForm = createReactClass({

@@ -1,5 +1,6 @@
-var React = require('react');
-var PropTypes = require('prop-types');
+// Libs
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export function RadioButton(props) {
   return (
