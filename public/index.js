@@ -1,12 +1,16 @@
 // Libs
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { HashRouter  as Router, Route } from 'react-router-dom';
 
 import Application from './components/app';
+import { Mailbox } from './components/mailbox';
 
 render((
     <Router>
-        <Route path="/" component={Application}/>
+        <div>
+            <Route exact path="/" component={Application}/>
+            <Route path="/mail" component={Mailbox}/>
+        </div>
     </Router>
 ), document.getElementById('container'));
