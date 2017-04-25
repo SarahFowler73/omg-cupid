@@ -39,12 +39,10 @@ let Application = createReactClass({
     render: function () {
         return (
           <div>
-              <Header />
               <ProfileForm submitForm={this.makeProfile}/>
           </div>
         );
       },
-
     /* Application methods */
 
     makeProfile: function (profileObj) {
