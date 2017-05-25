@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 export function Header(props) {
   return (
@@ -11,10 +12,28 @@ export function Header(props) {
               <nav className='w3-right-align'>
               { true
                 ?
-                <ul className=''>
-                    <li className='w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white'>Link1</li>
-                    <li className='w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white'>Link2</li>
-                    <li className='w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white'>Link3</li>
+                <ul className="main-nav">
+                    <li>
+                        <NavLink
+                            className='w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white'
+                            to="/profile">
+                            Your Profile
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            className='w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white'
+                            to="/mail">
+                            Mail
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            className='w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white'
+                            to="/users">
+                            View Users
+                        </NavLink>
+                    </li>
                 </ul>
                 :
                 ''

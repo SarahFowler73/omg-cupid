@@ -4,12 +4,8 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 
 // Components
-import { Header } from './header';
 import ProfileForm from './profile-form';
 
-function randomElem(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
 
 let Application = createReactClass({
 

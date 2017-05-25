@@ -1,7 +1,7 @@
 // Libs
 import React from 'react';
 import { render } from 'react-dom';
-import { HashRouter  as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Application from './components/app';
 import ProfileForm from './components/profile-form';
@@ -9,7 +9,7 @@ import { Mailbox } from './components/mailbox';
 import { Header } from './components/header';
 
 function Profile (props) {
-    return (<p>I am a profile! </p>);
+    return (<p>I am a profile!</p>);
 }
 
 function Users (props) {
