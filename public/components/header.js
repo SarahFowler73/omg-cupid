@@ -10,7 +10,7 @@ export function Header(props) {
                   <p className='w3-bar-item'><em>A simulated dating experience!</em></p>
               </div>
               <nav className='w3-right-align'>
-              { true
+              { props.has_profile
                 ?
                 <ul className="main-nav">
                     <li>

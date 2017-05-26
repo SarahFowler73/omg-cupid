@@ -25,8 +25,8 @@ let Application = createReactClass({
     propTypes: {
         userProfile: PropTypes.shape({
             username: PropTypes.string.isRequired,
-            ageChoice: PropTypes.string.isRequired,
-            sexChoice: PropTypes.string.isRequired,
+            age: PropTypes.string.isRequired,
+            sex: PropTypes.string.isRequired,
             description: PropTypes.string.isRequired,
             lookingFor: PropTypes.arrayOf(PropTypes.string).isRequired,
           }),
@@ -36,8 +36,8 @@ let Application = createReactClass({
         return {
             userProfile: {
                 username: null,
-                ageChoice: null,
-                sexChoice: null,
+                age: null,
+                sex: null,
                 description: null,
                 lookingFor: [],
                 canCount: null,
@@ -48,14 +48,20 @@ let Application = createReactClass({
     render: function () {
         return (
             <div>
-                <Header />
+                <Header has_profile={ this.state.userProfile.username }/>
                 <div className='w3-content main-content'>
                     <Route
                         exact path="/"
-                        render={ () => <ProfileForm submitForm={this.makeProfile}/> }
+                        render={ () => <ProfileForm submitForm={ this.makeProfile }/> }
                     />
-                    <Route path="/mail" component={ Mailbox }/>
-                    <Route path="/profile" component={ Profile }/>
+                    <Route
+                        path="/profile"
+                        component={ Profile }
+                    />
+                    <Route
+                        path="/mail"
+                        render={ () => <Mailbox gender={ this.state.userProfile.sex } /> }
+                    />
                     <Route path="/users" component={ Users }/>
                 </div>
             </div>
@@ -65,8 +71,8 @@ let Application = createReactClass({
 
     makeProfile: function (profileObj) {
         this.state.userProfile.username = profileObj.username;
-        this.state.userProfile.ageChoice = profileObj.age;
-        this.state.userProfile.sexChoice = profileObj.sex;
+        this.state.userProfile.age = profileObj.age;
+        this.state.userProfile.sex = profileObj.sex;
         this.state.userProfile.description = profileObj.description;
         this.state.userProfile.lookingFor = profileObj.lookingFor;
         this.state.userProfile.canCount = profileObj.canCount;
