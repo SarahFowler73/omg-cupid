@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import { Redirect } from 'react-router-dom';
 
 import { RadioButton, InputField, AgeField, SexField, LookingFor } from './profile-fields';
 
@@ -35,6 +36,7 @@ let ProfileForm = createReactClass({
             lookingFor: [],
             canCount: false,
             warnings: [],
+            form_complete: false,
           };
       },
 
@@ -106,7 +108,7 @@ let ProfileForm = createReactClass({
         // minus warnings and canCount
         return Object.values(this.state).filter(
             function (val) {return val && val.length;}
-        ).length < Object.values(this.state).length - 2;
+        ).length < Object.values(this.state).length - 3;
       },
 
     validateProfile: function (evt, props) {
@@ -114,6 +116,8 @@ let ProfileForm = createReactClass({
         if (this.state.warnings.length || this.checkMissing()) {
           alert('You have invalid or empty values in your profile!');
         } else {
+          this.state.form_complete = true;
+          this.setState(this.state);
           this.checkDescription(this.state.description);
           this.props.submitForm(this.state);
         }
@@ -166,11 +170,12 @@ let ProfileForm = createReactClass({
                     />
                     <input
                         type='submit'
-                        className='w3-margin'
+                        className='w3-margin w3-button w3-border'
                         value='Make My Profile!'
                         onClick={this.validateProfile}
                     />
                 </form>
+                {this.state.form_complete ? <Redirect to='/profile'/> : ''}
             </div>
         );
       },
