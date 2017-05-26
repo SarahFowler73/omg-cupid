@@ -9,15 +9,8 @@ import createReactClass from 'create-react-class';
 import ProfileForm from './components/profile-form';
 import { Mailbox } from './components/mailbox';
 import { Header } from './components/header';
-
-
-function Profile (props) {
-    return (<p>I am a profile!</p>);
-}
-
-function Users (props) {
-    return (<p>I am all the users!</p>);
-}
+import { Profile } from './components/profile';
+import { Users } from './components/users';
 
 
 let Application = createReactClass({
@@ -33,16 +26,26 @@ let Application = createReactClass({
       },
 
     getInitialState: function () {
+        // return {
+        //     userProfile: {
+        //         username: null,
+        //         age: null,
+        //         sex: null,
+        //         description: null,
+        //         lookingFor: [],
+        //         canCount: null,
+        //       },
+        //   };
         return {
             userProfile: {
-                username: null,
-                age: null,
-                sex: null,
-                description: null,
-                lookingFor: [],
-                canCount: null,
-              },
-          };
+                username: 'test',
+                age: '18',
+                sex: 'female',
+                description: 'Animal',
+                lookingFor: ['Long Term'],
+                canCount: true,
+            }
+        }
       },
 
     render: function () {
@@ -56,7 +59,7 @@ let Application = createReactClass({
                     />
                     <Route
                         path="/profile"
-                        component={ Profile }
+                        render={ () => <Profile userProfile={ this.state.userProfile } />}
                     />
                     <Route
                         path="/mail"

@@ -1,0 +1,9 @@
+{
+    "male": [
+        {"username": "ham_samwich", "age": "", "lookingFor": [], "description": "", "canCount": true}
+    ],
+
+    "female": [
+        {"username": "hellaCutieGrrl23", "age": "18-24", "lookingFor": [], "description": "IHateDrama.IfYouCan'tHandleMeAtMyWorstYouDon'tDeserveMeAtMyBest!", "canCount": true}
+    ]
+}
