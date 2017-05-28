@@ -12,6 +12,9 @@ import { Header } from './components/header';
 import { Profile } from './components/profile';
 import { Users } from './components/users';
 
+// Data
+import * as Mail from './data/mail.json';
+
 
 let Application = createReactClass({
 
@@ -63,7 +66,12 @@ let Application = createReactClass({
                     />
                     <Route
                         path="/mail"
-                        render={ () => <Mailbox gender={ this.state.userProfile.sex } /> }
+                        render={ () =>
+                            <Mailbox
+                                gender={ this.state.userProfile.sex }
+                                messages={ Mail[this.state.userProfile.sex].messages }
+                            />
+                        }
                     />
                     <Route path="/users" component={ Users }/>
                 </div>

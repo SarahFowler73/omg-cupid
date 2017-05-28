@@ -1,0 +1,17 @@
+{
+    "female": {
+        "messages": [
+            "hey",
+            "hi sexy",
+            "you cute",
+            "hello some sex?",
+            "HEY SEXY GIRL! YOU ARE SO SEXY I WANT TO"
+        ]
+    },
+    "male": {
+        "messages": [
+            "Hi, \nI read your profile. I think blah blah.",
+            "Hello!\nI really like water trundling, too! It's crazy how hard it is to find someone to go with!..."
+        ]
+    }
+}
