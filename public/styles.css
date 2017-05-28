@@ -11,16 +11,21 @@ h1 {
     margin-top: 10em!important;
 }
 
-.main-nav {
+.nav {
     float: right;
 }
 
-.main-nav li {
+.nav li {
     display: table-cell;
     vertical-align: middle;
     float: left;
     text-decoration: none;
     list-style-type: none;
+}
+
+.hover-blue:hover {
+    background-color: #7d97a5 !important;
+    color: white !important;
 }
 
 .profileForm {

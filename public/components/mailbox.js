@@ -1,12 +1,11 @@
 import React from 'react';
-import { Route, Link, Redirect } from 'react-router-dom';
+import { Route, NavLink, Redirect } from 'react-router-dom';
 
-var users = ['hey', 'ho'];
+const users = ['hey', 'ho'];
 
 function MessageList(props) {
     return (
         <ul>
-            <label>{ props.label }</label>
             {
                 props.displayMessages
                 ?
@@ -21,15 +20,16 @@ function MessageList(props) {
 export function Mailbox(props) {
     return (
         <div>
-            <Link to='/mail/inbox'>Received</Link>
-            <Link to='/mail/outbox'>Sent</Link>
+            <ul className="nav">
+                <li><NavLink to='/mail/inbox' className='w3-bar-item w3-button w3-hide-small w3-padding-large hover-blue'>Your Messages</NavLink></li>
+                <li><NavLink to='/mail/outbox' className='w3-bar-item w3-button w3-hide-small w3-padding-large hover-blue'>Sent Messages</NavLink></li>
+            </ul>
             <Route path='/mail' render={ () => <Redirect to='/mail/inbox'/> } />
 
             <Route
                 path='/mail/outbox'
                 render={ () =>
                     <MessageList
-                        label="Sent"
                         displayMessages={ props.gender === 'male' }
                         messages={ props.messages }
                     />
@@ -39,7 +39,6 @@ export function Mailbox(props) {
                 path='/mail/inbox'
                 render={ () =>
                     <MessageList
-                        label="Received"
                         displayMessages={ props.gender === 'female' }
                         messages={ props.messages }
                     />

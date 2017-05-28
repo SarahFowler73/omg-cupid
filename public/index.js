@@ -16,7 +16,7 @@ import { Users } from './components/users';
 import * as Mail from './data/mail.json';
 
 
-let Application = createReactClass({
+const Application = createReactClass({
 
     propTypes: {
         userProfile: PropTypes.shape({

@@ -12,7 +12,7 @@ export function Header(props) {
               <nav className='w3-right-align'>
               { props.has_profile
                 ?
-                <ul className="main-nav">
+                <ul className="nav">
                     <li>
                         <NavLink
                             className='w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white'
