@@ -1,0 +1,27 @@
+{
+    "male": {
+        "usernameDescriptions": [
+            "handsome", "cool", "strong", "chill", "beard", "beast", "beer",
+            "football",
+        ],
+        "usernameObject": [
+            "sam", "jim", "guy", "mcLovin", "dude", "paul", "man", "stud"
+        ],
+        "usernameEnd": [
+            "420", "!",
+        ]
+    },
+
+    "female": {
+        "usernameDescriptions": [
+            "hella", "cutie", "hawt", "strong", "chill", "nasty", "angry"
+        ],
+        "usernameObject": [
+            "grrl", "girl", "whoaMan", "hottie", "chick", "babe", "momma",
+            "sally", "janet", "kelly"
+        ],
+        "usernameEnd": [
+            "<3", "!"
+        ]
+    }
+}
