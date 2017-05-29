@@ -6,10 +6,6 @@ import { Redirect } from 'react-router-dom';
 
 import { RadioButton, InputField, AgeField, SexField, LookingFor } from './profile-fields';
 
-const AGE_CHOICES = ['Pick one:', '18-24', '25-29', '30-34', '35+'];
-const SEX_CHOICES = ['Male', 'Female', 'Other'];
-const LOOKING_FOR = ['Long Term', 'Short Term', 'One Night', 'One Minute'];
-
 let ProfileForm = createReactClass({
 
     propTypes: {
@@ -17,14 +13,6 @@ let ProfileForm = createReactClass({
         sexOpts: PropTypes.arrayOf(PropTypes.string).isRequired,
         lookingFor: PropTypes.array.isRequired,
         submitForm: PropTypes.func.isRequired,
-      },
-
-    getDefaultProps: function () {
-        return {
-            ageOpts: AGE_CHOICES,
-            sexOpts: SEX_CHOICES,
-            lookingFor: LOOKING_FOR,
-          };
       },
 
     getInitialState: function () {

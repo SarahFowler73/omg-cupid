@@ -14,6 +14,8 @@ import { Users } from './components/users';
 
 // Data
 import * as Mail from './data/mail.json';
+import * as Profiles from './data/profiles.json'
+import { AGE_CHOICES, SEX_CHOICES, LOOKING_FOR } from './data/profile-inputs';
 
 
 const Application = createReactClass({
@@ -58,7 +60,14 @@ const Application = createReactClass({
                 <div className='w3-content main-content'>
                     <Route
                         exact path="/"
-                        render={ () => <ProfileForm submitForm={ this.makeProfile }/> }
+                        render={ () =>
+                            <ProfileForm
+                                submitForm={ this.makeProfile }
+                                ageOpts={ AGE_CHOICES }
+                                sexOpts={ SEX_CHOICES }
+                                lookingFor={ LOOKING_FOR }
+                            />
+                        }
                     />
                     <Route
                         path="/profile"
