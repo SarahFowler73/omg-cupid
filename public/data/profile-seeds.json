@@ -2,13 +2,13 @@
     "male": {
         "usernameDescriptions": [
             "handsome", "cool", "strong", "chill", "beard", "beast", "beer",
-            "football",
+            "football"
         ],
         "usernameObject": [
             "sam", "jim", "guy", "mcLovin", "dude", "paul", "man", "stud"
         ],
         "usernameEnd": [
-            "420", "!",
+            "420", "!"
         ]
     },
 

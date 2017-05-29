@@ -14,7 +14,7 @@ import { Users } from './components/users';
 
 // Data
 import * as Mail from './data/mail.json';
-import * as Profiles from './data/profiles.json'
+import * as Profiles from './data/profile-seeds.json'
 import { AGE_CHOICES, SEX_CHOICES, LOOKING_FOR } from './data/profile-inputs';
 
 
