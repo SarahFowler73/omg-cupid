@@ -28,6 +28,10 @@ h1 {
     color: white !important;
 }
 
+.clearfix {
+    clear: both;
+}
+
 .profileForm {
     margin: auto;
     text-align: center;

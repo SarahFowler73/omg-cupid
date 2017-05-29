@@ -5,21 +5,33 @@ const users = ['hey', 'ho'];
 
 function MessageList(props) {
     return (
-        <ul>
-            {
-                props.displayMessages
-                ?
-                props.messages.map( (message, i) => <li key={i}><span>To: {users[i]}</span> { message }</li>)
-                :
-                <li>Nothing here!</li>
-            }
-        </ul>
+        <div className='clearfix'>
+            <table className=' w3-table w3-bordered'>
+                <tr><th>{props.fromto}</th><th>Message</th></tr>
+                {
+                    props.displayMessages
+                    ?
+                    props.messages.map( (message, i) =>
+                        <tr key={i}>
+                            <td>{ users[i] }</td>
+                            <td>{ message }</td>
+                        </tr>
+                    )
+                    :
+                    <tr>
+                        <td colSpan="2" className='w3-center'>
+                            { props.nothingMessage }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
     );
 }
 
 export function Mailbox(props) {
     return (
-        <div>
+        <div className='w3-card-2 w3-round w3-white w3-margin w3-padding'>
             <ul className="nav">
                 <li><NavLink to='/mail/inbox' className='w3-bar-item w3-button w3-hide-small w3-padding-large hover-blue'>Your Messages</NavLink></li>
                 <li><NavLink to='/mail/outbox' className='w3-bar-item w3-button w3-hide-small w3-padding-large hover-blue'>Sent Messages</NavLink></li>
@@ -30,8 +42,10 @@ export function Mailbox(props) {
                 path='/mail/outbox'
                 render={ () =>
                     <MessageList
+                        fromto='From'
                         displayMessages={ props.gender === 'male' }
                         messages={ props.messages }
+                        nothingMessage={ "You haven't sent any messages!" }
                     />
                 }
             />
@@ -39,8 +53,10 @@ export function Mailbox(props) {
                 path='/mail/inbox'
                 render={ () =>
                     <MessageList
+                        fromto='To'
                         displayMessages={ props.gender === 'female' }
                         messages={ props.messages }
+                        nothingMessage={ "You haven't gotten even ONE message? Um, maybe you should try giving up." }
                     />
                 }
             />
