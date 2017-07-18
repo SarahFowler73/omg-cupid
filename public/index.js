@@ -1,7 +1,7 @@
 // Libs
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 
@@ -35,28 +35,28 @@ const Application = createReactClass({
       },
 
     getInitialState: function () {
-        // return {
-        //     userProfile: {
-        //         username: null,
-        //         age: null,
-        //         sex: null,
-        //         description: null,
-        //         lookingFor: [],
-        //         canCount: null,
-        //      },
-        //      users: []
-        //  };
         return {
             userProfile: {
-                username: 'test',
-                age: '18',
-                sex: 'male',
-                description: 'Animal',
-                lookingFor: ['Long Term'],
-                canCount: true,
-            },
-            users: this.generateUsers('male')
-        }
+                username: null,
+                age: null,
+                sex: null,
+                description: null,
+                lookingFor: [],
+                canCount: null,
+             },
+             users: []
+         }
+        // return {
+        //     userProfile: {
+        //         username: 'test',
+        //         age: '18',
+        //         sex: 'male',
+        //         description: 'Animal',
+        //         lookingFor: ['Long Term'],
+        //         canCount: false,
+        //     },
+        //     users: this.generateUsers('male')
+        // }
     },
 
     /* Render App Components with Routes */
@@ -80,25 +80,35 @@ const Application = createReactClass({
                     <Route
                         path="/profile"
                         render={ () =>
-                            <Profile userProfile={ this.state.userProfile } />
+                            this.state.userProfile.username
+                            ?
+                            (<Profile userProfile={ this.state.userProfile } />)
+                            :
+                            (<Redirect to={{ pathname: '/' }} />)
                         }
                     />
                     <Route
                         path="/mail"
                         render={ () =>
-                            <Mailbox
+                            this.state.userProfile.username
+                            ?
+                            (<Mailbox
                                 gender={ this.state.userProfile.sex }
                                 messages={ Mail[this.state.userProfile.sex].messages }
                                 users={ this.state.users }
-                            />
+                            />)
+                            :
+                            (<Redirect to={{ pathname: '/' }} />)
                         }
                     />
                     <Route
                         path="/users"
                         render={ () =>
-                            <Users
-                                users={ this.state.users }
-                            />
+                            this.state.userProfile.username
+                            ?
+                            (<Users users={ this.state.users } />)
+                            :
+                            (<Redirect to={{ pathname: '/' }} />)
                         }
                     />
                 </div>
