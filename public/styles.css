@@ -14,16 +14,21 @@ h1 {
 
 .main-content {
     margin-top: 10em!important;
-    position:absolute;
+    /*position:absolute;
     width: 100%;
     height: 80%;
     left: 0;
     right: 0;
-    margin: auto;
+    margin: auto;*/
 }
 
-.main-content > div {
+/*.main-content > div {
     height: 90%;
+}*/
+
+li {
+    text-decoration: none;
+    list-style-type: none;
 }
 
 .nav {
@@ -34,8 +39,6 @@ h1 {
     display: table-cell;
     vertical-align: middle;
     float: left;
-    text-decoration: none;
-    list-style-type: none;
 }
 
 .hover-blue:hover {
@@ -56,8 +59,17 @@ h1 {
     display: block;
 }
 
+label.inline-selection {
+    display: inline-block;
+    padding: 1em;
+}
+
 .form-group {
     padding: 8px;
+}
+
+.form-group > label {
+    font-weight: bold;
 }
 
 /* Popup container */

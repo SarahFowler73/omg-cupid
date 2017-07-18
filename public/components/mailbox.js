@@ -35,7 +35,7 @@ function MessageList(props) {
 
 export function Mailbox(props) {
     return (
-        <div className='w3-card-2 w3-round w3-white w3-margin w3-padding'>
+        <div className='w3-card-4 w3-round w3-white w3-margin w3-padding'>
             <ul className="nav">
                 <li><NavLink to='/mail/inbox' className='w3-bar-item w3-button w3-hide-small w3-padding-large hover-blue'>Your Messages</NavLink></li>
                 <li><NavLink to='/mail/outbox' className='w3-bar-item w3-button w3-hide-small w3-padding-large hover-blue'>Sent Messages</NavLink></li>

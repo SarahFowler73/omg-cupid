@@ -3,12 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export function RadioButton(props) {
-  return (
-      <label>
+    return (
+        <label className="inline-selection">
             <input type='radio' name={props.name} value={props.value} checked={props.checked}/>
             {' ' + props.label}
         </label>
-  );
+    );
 }
 
 RadioButton.propTypes = {
@@ -105,8 +105,9 @@ export function LookingFor(props) {
   return (
       <div className='form-group'>
         <label>Looking for: </label>
-        {props.lookingFor.map(function (box, i) {
-          return <label key={i}>{box}:
+        <div> {props.lookingFor.map(function (box, i) {
+            return <label className="inline-selection" key={i}>
+                {box}:
                 <input
                   type='checkbox'
                   name='lookingFor'
@@ -114,9 +115,10 @@ export function LookingFor(props) {
                   onChange={function (evt) {props.validateLookingFor(evt);}}
                   checked={props.whichChecked.indexOf(box) > -1 ? 'checked' : ''}
               />
-            </label>;
-        })}
+            </label>
+         })}
         </div>
+      </div>
   );
 }
 

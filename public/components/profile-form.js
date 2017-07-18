@@ -29,12 +29,14 @@ let ProfileForm = createReactClass({
       },
 
     existsInArray: function (value, stateArrayKey) {
+        // Return int > 0 if exists in state attribute of array type
         return this.state[stateArrayKey].filter(
             function (val) {return val == value;}
         ).length;
       },
 
     addToArray: function (value, stateArrayKey) {
+        // Add to state attribute of array type
         let arr = this.state[stateArrayKey].slice();
         if (!this.existsInArray(value, stateArrayKey))
             arr.push(value);
@@ -42,6 +44,7 @@ let ProfileForm = createReactClass({
       },
 
     removeFromArray: function (value, stateArrayKey) {
+        // Remove from state attribute of array type
         let arr = this.state[stateArrayKey].slice();
         if (this.existsInArray(value, stateArrayKey))
             arr.splice(arr.indexOf(value), 1);
@@ -49,9 +52,9 @@ let ProfileForm = createReactClass({
       },
 
     validateInputText: function (evt, value) {
-        this.state[value] = evt.target.value; /* set the value */
+        this.state[value] = evt.target.value; // set the value
 
-        /* Handle warnings for spaces */
+        // Handle warnings for spaces
         this.state.warnings = /\s/.test(evt.target.value) ?
             this.addToArray(value, 'warnings')
             :
@@ -81,7 +84,8 @@ let ProfileForm = createReactClass({
       },
 
     checkDescription: function (description) {
-
+        // Use datamuse dictionary api to check if description
+        // is three syllables
         fetch(`http://api.datamuse.com/words?sp=${description}&qe=sp&md=s&max=1`)
             .then(response => response.json())
             .then(function (responseData) {
@@ -109,13 +113,12 @@ let ProfileForm = createReactClass({
           this.checkDescription(this.state.description);
           this.props.submitForm(this.state);
         }
-
       },
 
     render: function () {
         return (
             <div id='profile-form'
-                 className='w3-card-2 w3-round w3-white w3-center w3-margin w3-padding'
+                 className='w3-card-4 w3-round w3-white w3-center w3-margin w3-padding'
             >
                 <h3>Make Your Profile!</h3>
                 <form className='profileForm'>
@@ -142,7 +145,6 @@ let ProfileForm = createReactClass({
                             'depends on binary sex choice. Sorry. :('
                         }
                     />
-
                     <InputField
                         name='description'
                         label='Describe yourself using one three-syllable word'

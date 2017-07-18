@@ -35,28 +35,28 @@ const Application = createReactClass({
       },
 
     getInitialState: function () {
-        return {
-            userProfile: {
-                username: null,
-                age: null,
-                sex: null,
-                description: null,
-                lookingFor: [],
-                canCount: null,
-             },
-             users: []
-         }
         // return {
         //     userProfile: {
-        //         username: 'test',
-        //         age: '18',
-        //         sex: 'male',
-        //         description: 'Animal',
-        //         lookingFor: ['Long Term'],
-        //         canCount: false,
-        //     },
-        //     users: this.generateUsers('male')
-        // }
+        //         username: null,
+        //         age: null,
+        //         sex: null,
+        //         description: null,
+        //         lookingFor: [],
+        //         canCount: null,
+        //      },
+        //      users: []
+        //  }
+        return {
+            userProfile: {
+                username: 'test',
+                age: '18',
+                sex: 'male',
+                description: 'Animal',
+                lookingFor: ['Long Term', 'Short Term'],
+                canCount: false,
+            },
+            users: this.generateUsers('male')
+        }
     },
 
     /* Render App Components with Routes */
