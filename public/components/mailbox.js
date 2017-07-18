@@ -7,23 +7,27 @@ function MessageList(props) {
     return (
         <div className='clearfix'>
             <table className=' w3-table w3-bordered'>
-                <tr><th>{props.fromto}</th><th>Message</th></tr>
-                {
-                    props.displayMessages
-                    ?
-                    props.messages.map( (message, i) =>
-                        <tr key={i}>
-                            <td>{ users[i] }</td>
-                            <td>{ message }</td>
+                <thead>
+                    <tr><th>{props.fromto}</th><th>Message</th></tr>
+                </thead>
+                <tbody>
+                    {
+                        props.displayMessages
+                        ?
+                        props.messages.map( (message, i) =>
+                            <tr key={i}>
+                                <td>{ props.users[i].username }</td>
+                                <td>{ message }</td>
+                            </tr>
+                        )
+                        :
+                        <tr>
+                            <td colSpan="2" className='w3-center'>
+                                { props.nothingMessage }
+                            </td>
                         </tr>
-                    )
-                    :
-                    <tr>
-                        <td colSpan="2" className='w3-center'>
-                            { props.nothingMessage }
-                        </td>
-                    </tr>
-                }
+                    }
+                </tbody>
             </table>
         </div>
     );
@@ -45,6 +49,7 @@ export function Mailbox(props) {
                         fromto='From'
                         displayMessages={ props.gender === 'male' }
                         messages={ props.messages }
+                        users={ props.users }
                         nothingMessage={ "You haven't sent any messages!" }
                     />
                 }
@@ -56,6 +61,7 @@ export function Mailbox(props) {
                         fromto='To'
                         displayMessages={ props.gender === 'female' }
                         messages={ props.messages }
+                        users={ props.users }
                         nothingMessage={ "You haven't gotten even ONE message? Um, maybe you should try giving up." }
                     />
                 }

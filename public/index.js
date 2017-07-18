@@ -14,9 +14,13 @@ import { Users } from './components/users';
 
 // Data
 import * as Mail from './data/mail.json';
-import * as Profiles from './data/profile-seeds.json'
-import { AGE_CHOICES, SEX_CHOICES, LOOKING_FOR } from './data/profile-inputs';
+import * as ProfileSeeds from './data/profile-seeds.json';
+import * as ProfileQuotes from './data/profile-quotes.json'
+import { AGE_CHOICES, SEX_CHOICES, LOOKING_FOR } from './data/profile-inputs'
 
+function getRandomArrayElem (arr){
+    return arr[Math.floor(Math.random() * arr.length)]
+}
 
 const Application = createReactClass({
 
@@ -39,19 +43,23 @@ const Application = createReactClass({
         //         description: null,
         //         lookingFor: [],
         //         canCount: null,
-        //       },
-        //   };
+        //      },
+        //      users: []
+        //  };
         return {
             userProfile: {
                 username: 'test',
                 age: '18',
-                sex: 'female',
+                sex: 'male',
                 description: 'Animal',
                 lookingFor: ['Long Term'],
                 canCount: true,
-            }
+            },
+            users: this.generateUsers('male')
         }
-      },
+    },
+
+    /* Render App Components with Routes */
 
     render: function () {
         return (
@@ -71,7 +79,9 @@ const Application = createReactClass({
                     />
                     <Route
                         path="/profile"
-                        render={ () => <Profile userProfile={ this.state.userProfile } />}
+                        render={ () =>
+                            <Profile userProfile={ this.state.userProfile } />
+                        }
                     />
                     <Route
                         path="/mail"
@@ -79,14 +89,23 @@ const Application = createReactClass({
                             <Mailbox
                                 gender={ this.state.userProfile.sex }
                                 messages={ Mail[this.state.userProfile.sex].messages }
+                                users={ this.state.users }
                             />
                         }
                     />
-                    <Route path="/users" component={ Users }/>
+                    <Route
+                        path="/users"
+                        render={ () =>
+                            <Users
+                                users={ this.state.users }
+                            />
+                        }
+                    />
                 </div>
             </div>
         );
       },
+
     /* Application methods */
 
     makeProfile: function (profileObj) {
@@ -97,10 +116,29 @@ const Application = createReactClass({
         this.state.userProfile.lookingFor = profileObj.lookingFor;
         this.state.userProfile.canCount = profileObj.canCount;
 
+        this.state.users = this.generateUsers(profileObj.sex);
         this.setState(this.state);
-      },
+    },
 
-  });
+    generateUsers: function(oppSex) {
+        let users = []
+        let userGender = oppSex === 'male' ? 'female' : 'male'
+        let profileSeeds = ProfileSeeds[userGender]
+
+        for (let i = 0; i < 20; i++) {
+            users.push({
+                "username":
+                    getRandomArrayElem(profileSeeds.userStart) +
+                    getRandomArrayElem(profileSeeds.userMid) +
+                    getRandomArrayElem(profileSeeds.userEnd),
+                "age": AGE_CHOICES[getRandomArrayElem([1,2,3])],
+                "quote": getRandomArrayElem(ProfileQuotes.quotes),
+                "lookingFor": []
+            })
+        }
+        return users;
+    },
+});
 
 render((
     <Router>
