@@ -1,27 +1,30 @@
 {
     "male": {
-        "usernameDescriptions": [
-            "handsome", "cool", "strong", "chill", "beard", "beast", "beer",
-            "football"
+        "userStart": [
+            "Handsome", "Cool", "Strong", "Chill", "Beard", "Beast", "Beer",
+            "Football", "Tough", "Manly", "Alpha", "Powerful", "Rich"
         ],
-        "usernameObject": [
-            "sam", "jim", "guy", "mcLovin", "dude", "paul", "man", "stud"
+        "userMid": [
+            "Sam", "Jim", "Guy", "McLovin", "Dude", "Paul", "Man", "Stud",
+            "Alpha", "Fighter", "Powerhouse", "Jack", "Bob", "Baller"
         ],
-        "usernameEnd": [
-            "420", "!"
+        "userEnd": [
+            "420", "!", "13", "77", "21", "23", ""
         ]
     },
 
     "female": {
-        "usernameDescriptions": [
-            "hella", "cutie", "hawt", "strong", "chill", "nasty", "angry"
+        "userStart": [
+            "hella", "Cutie", "Hawt", "Strong", "Chill", "Nasty", "Angry",
+            "Gorgeous", "Beautiful", "Dreamy", "Flirty", "Charming"
         ],
-        "usernameObject": [
-            "grrl", "girl", "whoaMan", "hottie", "chick", "babe", "momma",
-            "sally", "janet", "kelly"
+        "userMid": [
+            "Grrl", "Girl", "WhoaMan", "Hottie", "Chick", "Babe", "Momma",
+            "Sally", "Janet", "Kelly", "Kitten", "Prude", "Jenny", "Cat",
+            "Kitty"
         ],
-        "usernameEnd": [
-            "<3", "!"
+        "userEnd": [
+            "<3", "!", "12", "77", "21", "23", ";p", ""
         ]
     }
 }
