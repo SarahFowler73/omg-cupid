@@ -26,6 +26,24 @@ h1 {
     height: 90%;
 }*/
 
+.content-w-50 {
+    width: 50%;
+    margin: auto;
+}
+
+.content-w-40 {
+    width: 40%;
+    margin: auto;
+}
+
+#profile-fields ul {
+    padding-left: 0;
+}
+
+#profile-fields * {
+    vertical-align: middle;
+}
+
 li {
     text-decoration: none;
     list-style-type: none;
@@ -39,6 +57,15 @@ li {
     display: table-cell;
     vertical-align: middle;
     float: left;
+}
+
+.avatar {
+    border-radius: 50%;
+    max-width: 3em;
+}
+
+.line-height-min {
+    line-height: 1em;
 }
 
 .hover-blue:hover {
@@ -61,7 +88,7 @@ li {
 
 label.inline-selection {
     display: inline-block;
-    padding: 1em;
+    padding-right: 1em;
 }
 
 .form-group {
@@ -70,6 +97,7 @@ label.inline-selection {
 
 .form-group > label {
     font-weight: bold;
+    padding-bottom: .5em;
 }
 
 /* Popup container */
