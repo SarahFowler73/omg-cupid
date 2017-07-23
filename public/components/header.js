@@ -5,9 +5,9 @@ export function Header(props) {
   return (
       <div className='w3-top'>
           <div className='w3-padding w3-block w3-theme-l1 w3-left'>
-              <div className='w3-left'>
-                  <h1 id='logo' className='w3-bar-item'><img src='/assets/omg-logo.png'/></h1>
-                  <p className='w3-bar-item'><em>A simulated dating experience!</em></p>
+              <div id='logo' className='w3-left'>
+                  <h1 className='w3-bar-item'><img src='/assets/omg-logo.png'/></h1>
+                  <p className='w3-bar-item w3-center'><em>A simulated dating experience!</em></p>
               </div>
               <nav className='w3-right-align'>
               { props.has_profile
