@@ -36,6 +36,10 @@ h1 {
     margin: auto;
 }
 
+#logo img{
+    max-height: 3em;
+}
+
 #profile-fields ul {
     padding-left: 0;
 }
@@ -110,6 +114,10 @@ label.inline-selection {
 .form-group > label {
     font-weight: bold;
     padding-bottom: .5em;
+}
+
+.chat-window {
+    position: absolute;
 }
 
 /* Popup container */
