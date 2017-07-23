@@ -1,4 +1,3 @@
-// Libs
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -107,7 +106,7 @@ export function LookingFor(props) {
         <label>Looking for: </label>
         <div> {props.lookingFor.map(function (box, i) {
             return <label className="inline-selection" key={i}>
-                {box}:
+                {box + ': '}
                 <input
                   type='checkbox'
                   name='lookingFor'

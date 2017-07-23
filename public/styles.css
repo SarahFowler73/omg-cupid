@@ -44,6 +44,18 @@ h1 {
     vertical-align: middle;
 }
 
+#mailbox {
+    position:relative;
+    min-height: 300px;
+}
+
+#mailbox img {
+    height: 100%;
+    width: auto;
+    position: absolute;
+    opacity: .25;
+}
+
 li {
     text-decoration: none;
     list-style-type: none;

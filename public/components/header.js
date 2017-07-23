@@ -23,7 +23,7 @@ export function Header(props) {
                     <li>
                         <NavLink
                             className='w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white'
-                            to="/mail">
+                            to="/mail/inbox">
                             Mail
                         </NavLink>
                     </li>

@@ -5,37 +5,41 @@ const users = ['hey', 'ho'];
 
 function MessageList(props) {
     return (
-        <div className='clearfix'>
-            <table className=' w3-table w3-bordered'>
-                <thead>
-                    <tr><th>{props.fromto}</th><th>Message</th></tr>
-                </thead>
-                <tbody>
-                    {
-                        props.displayMessages
-                        ?
-                        props.messages.map( (message, i) =>
-                            <tr key={i}>
-                                <td>{ props.users[i].username }</td>
-                                <td>{ message }</td>
+        <div>
+            {props.showWeb ? <img src='/assets/web.png'/> : ''}
+            <div className='clearfix'>
+                <table className=' w3-table w3-bordered'>
+                    <thead>
+                        <tr><th>{props.fromto}</th><th>Message</th></tr>
+                    </thead>
+                    <tbody>
+                        {
+                            props.displayMessages
+                            ?
+                            props.messages.map( (message, i) =>
+                                <tr key={i}>
+                                    <td>{ props.users[i].username }</td>
+                                    <td>{ message }</td>
+                                </tr>
+                            )
+                            :
+                            <tr>
+                                <td colSpan="2" className='w3-center'>
+                                    { props.nothingMessage }
+                                </td>
                             </tr>
-                        )
-                        :
-                        <tr>
-                            <td colSpan="2" className='w3-center'>
-                                { props.nothingMessage }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }
 
 export function Mailbox(props) {
     return (
-        <div className='w3-card-4 w3-round w3-white w3-margin w3-padding'>
+        <div id='mailbox' className='w3-card-4 w3-round w3-white w3-margin w3-padding'>
+
             <ul className="nav">
                 <li><NavLink to='/mail/inbox' className='w3-bar-item w3-button w3-hide-small w3-padding-large hover-blue'>Your Messages</NavLink></li>
                 <li><NavLink to='/mail/outbox' className='w3-bar-item w3-button w3-hide-small w3-padding-large hover-blue'>Sent Messages</NavLink></li>
@@ -51,6 +55,7 @@ export function Mailbox(props) {
                         messages={ props.messages }
                         users={ props.users }
                         nothingMessage={ "You haven't sent any messages!" }
+                        showWeb={ false }
                     />
                 }
             />
@@ -62,7 +67,8 @@ export function Mailbox(props) {
                         displayMessages={ props.gender === 'female' }
                         messages={ props.messages }
                         users={ props.users }
-                        nothingMessage={ "You haven't gotten even ONE message? Um, maybe you should try giving up." }
+                        nothingMessage={ "Nothing Here! (Yes, you will die alone.)" }
+                        showWeb={ props.gender === 'male' }
                     />
                 }
             />
