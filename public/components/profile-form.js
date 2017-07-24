@@ -90,7 +90,7 @@ let ProfileForm = createReactClass({
             .then(response => response.json())
             .then(function (responseData) {
 
-                this.state.canCount = responseData.length && responseData[0].numSyllables === 3;
+                this.state.canCount = responseData.length && responseData[0].numSyllables == 3;
                 this.setState(this.state);
               }.bind(this));
       },
