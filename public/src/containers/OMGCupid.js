@@ -3,20 +3,19 @@ import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import createReactClass from 'create-react-class'
 
 // Components
-import ProfileForm from './components/ProfileForm'
-import { Mailbox } from './components/Mailbox'
-import { Header } from './components/Header'
-import { Profile } from './components/Profile'
-import Users from './components/Users'
+import ProfileForm from '../components/ProfileForm'
+import { Mailbox } from '../components/Mailbox'
+import { Header } from '../components/Header'
+import { Profile } from '../components/Profile'
+import Users from '../components/Users'
 
 // Data
-import * as Mail from './data/mail.json';
-import * as ProfileSeeds from './data/profile-seeds.json';
-import * as ProfileQuotes from './data/profile-quotes.json'
-import { AGE_CHOICES, SEX_CHOICES, LOOKING_FOR } from './data/profile-inputs'
+import * as Mail from '../../data/mail.json';
+import * as ProfileSeeds from '../../data/profile-seeds.json';
+import * as ProfileQuotes from '../../data/profile-quotes.json'
+import { AGE_CHOICES, SEX_CHOICES, LOOKING_FOR } from '../../data/profile-inputs'
 
 const getRandomArrayElem = (arr) => {
     return arr[Math.floor(Math.random() * arr.length)]
@@ -115,7 +114,7 @@ export default class OMGCupid extends Component {
 
         this.state.users = this.generateUsers(profileObj.sex)
         this.setState(this.state)
-    },
+    }
 
     generateUsers = (oppSex) => {
         let users = []

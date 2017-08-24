@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Users (props) {
+export const Users = (props) => {
     return (
         <div className="w3-content">
             {

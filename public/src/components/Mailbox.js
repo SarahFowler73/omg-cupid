@@ -1,9 +1,8 @@
 import React from 'react';
 import { Route, NavLink, Redirect } from 'react-router-dom';
 
-const users = ['hey', 'ho'];
 
-function MessageList(props) {
+const MessageList = (props) => {
     return (
         <div>
             {props.showWeb ? <img src='/assets/web.png'/> : ''}
@@ -36,7 +35,7 @@ function MessageList(props) {
     );
 }
 
-export function Mailbox(props) {
+export const Mailbox = (props) => {
     return (
         <div id='mailbox' className='w3-card-4 w3-round w3-white w3-margin w3-padding'>
 
