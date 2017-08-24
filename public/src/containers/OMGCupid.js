@@ -9,7 +9,7 @@ import ProfileForm from '../components/ProfileForm'
 import { Mailbox } from '../components/Mailbox'
 import { Header } from '../components/Header'
 import { Profile } from '../components/Profile'
-import Users from '../components/Users'
+import { Users } from '../components/Users'
 
 // Data
 import * as Mail from '../../data/mail.json';

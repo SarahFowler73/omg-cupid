@@ -35,13 +35,25 @@ const MessageList = (props) => {
     );
 }
 
+const NavigationItem = (props) => {
+    return (
+        <li>
+            <NavLink
+                className='w3-bar-item w3-button w3-hide-small w3-padding-large hover-blue'
+                to={ props.to }
+            >{ props.label }
+            </NavLink>
+        </li>
+    )
+}
+
 export const Mailbox = (props) => {
     return (
         <div id='mailbox' className='w3-card-4 w3-round w3-white w3-margin w3-padding'>
 
             <ul className="nav">
-                <li><NavLink to='/mail/inbox' className='w3-bar-item w3-button w3-hide-small w3-padding-large hover-blue'>Your Messages</NavLink></li>
-                <li><NavLink to='/mail/outbox' className='w3-bar-item w3-button w3-hide-small w3-padding-large hover-blue'>Sent Messages</NavLink></li>
+                <NavigationItem to='/mail/inbox' label='Your Messages' />
+                <NavigationItem to='/mail/outbox' label='Sent Messages' />
             </ul>
             <Route path='/mail' render={ () => <Redirect to='/mail/inbox'/> } />
 
