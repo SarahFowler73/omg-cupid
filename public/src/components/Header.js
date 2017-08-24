@@ -1,6 +1,19 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+const NavigationItem = (props) => {
+    return(
+        <li>
+            <NavLink
+                className='w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white'
+                to={ props.to }
+            >
+                { props.name }
+            </NavLink>
+        </li>
+    )
+}
+
 export const Header = (props) => {
   return (
       <div className='w3-top'>
@@ -15,27 +28,9 @@ export const Header = (props) => {
               { props.has_profile
                 ?
                 <ul className="nav">
-                    <li>
-                        <NavLink
-                            className='w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white'
-                            to="/profile">
-                            Your Profile
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            className='w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white'
-                            to="/mail/inbox">
-                            Mail
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            className='w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white'
-                            to="/users">
-                            View Users
-                        </NavLink>
-                    </li>
+                    <NavigationItem to="/profile" name="Your Profile" />
+                    <NavigationItem to="/mail/inbox" name="Mail" />
+                    <NavigationItem to="/users" name="View Users" />
                 </ul>
                 :
                 ''

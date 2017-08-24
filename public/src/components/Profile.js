@@ -21,7 +21,6 @@ const TableRow = (props) => {
     )
 }
 
-
 const ProfileAttributes = (props) => {
     return (
         <table id="profile-fields" className="w3-padding w3-table w3-bordered"><tbody>
@@ -45,7 +44,6 @@ const ProfileAttributes = (props) => {
         </tbody></table>
     )
 }
-
 
 export const Profile = (props) => {
     return (
