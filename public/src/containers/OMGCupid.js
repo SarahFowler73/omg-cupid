@@ -35,9 +35,9 @@ export default class OMGCupid extends Component {
 
     state = {
         userProfile: {
-            username: null,
+            username: 'hey',
             age: null,
-            sex: null,
+            sex: 'female',
             description: null,
             lookingFor: [],
             canCount: null,

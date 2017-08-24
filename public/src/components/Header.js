@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-export function Header(props) {
+export const Header = (props) => {
   return (
       <div className='w3-top'>
           <div className='w3-padding w3-block w3-theme-l1 w3-left'>
