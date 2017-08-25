@@ -26,7 +26,7 @@ const RouteOrRedirectHome = (props) => {
         <Route
             path={ props.path }
             render={ () =>
-                props.noRedirectCondition ? (props.component) : (<Redirect to={{ pathname: '/' }} />)
+                props.noRedirectCondition ? (props.children) : (<Redirect to={{ pathname: '/' }} />)
             }
         />
     )
@@ -77,24 +77,25 @@ export default class OMGCupid extends Component {
                     <RouteOrRedirectHome
                         path="/profile"
                         noRedirectCondition={ this.state.userProfile.username }
-                        component={ <Profile userProfile={ this.state.userProfile } /> }
-                    />
+                    >
+                        <Profile userProfile={ this.state.userProfile } />
+                    </RouteOrRedirectHome>
                     <RouteOrRedirectHome
                         path="/mail"
                         noRedirectCondition={ this.state.userProfile.username }
-                        component={
-                            <Mailbox
-                                gender={ this.state.userProfile.sex }
-                                messages={ this.state.userProfile.sex ? Mail[this.state.userProfile.sex].messages : [] }
-                                users={ this.state.users }
-                            />
-                        }
-                    />
+                    >
+                        <Mailbox
+                            gender={ this.state.userProfile.sex }
+                            messages={ this.state.userProfile.sex ? Mail[this.state.userProfile.sex].messages : [] }
+                            users={ this.state.users }
+                        />
+                    </RouteOrRedirectHome>
                     <RouteOrRedirectHome
                         path="/users"
                         noRedirectCondition={ this.state.userProfile.username }
-                        component={ <Users users={ this.state.users } /> }
-                    />
+                    >
+                        <Users users={ this.state.users } />
+                    </RouteOrRedirectHome>
                 </div>
             </div>
         );
