@@ -125,22 +125,22 @@ let ProfileForm = createReactClass({
                     <InputField
                         name='username'
                         label='Username'
-                        value={this.state.username}
-                        validateInputText={this.validateInputText}
-                        display={this.existsInArray('username', 'warnings') ? 'block' : 'none'}
+                        value={ this.state.username }
+                        validateInputText={ this.validateInputText }
+                        display={ this.existsInArray('username', 'warnings') ? 'block' : 'none' }
                         warning='No spaces in usernames!'
                      />
                     <AgeField
-                        ageOpts={this.props.ageOpts}
-                        validateAgeChoice={this.validateAgeSexChoice}
-                        display={this.existsInArray('age', 'warnings') ? 'block' : 'none'}
-                        warning={'Ew. No one wants to think about old people dating. Go away.'}
+                        ageOpts={ this.props.ageOpts }
+                        validateAgeChoice={ this.validateAgeSexChoice }
+                        display={ this.existsInArray('age', 'warnings') ? 'block' : 'none' }
+                        warning='Ew. No one wants to think about old people dating. Go away.'
                     />
                     <SexField
-                        sexOpts={this.props.sexOpts}
-                        validateSexChoice={this.validateAgeSexChoice}
-                        display={this.existsInArray('sex', 'warnings') ? 'block' : 'none'}
-                        whichChecked={this.state.sex}
+                        sexOpts={ this.props.sexOpts }
+                        validateSexChoice={ this.validateAgeSexChoice }
+                        display={ this.existsInArray('sex', 'warnings') ? 'block' : 'none' }
+                        whichChecked={ this.state.sex }
                         warning={'Unfortunately, the only joke I have ' +
                             'depends on binary sex choice. Sorry. :('
                         }
@@ -148,24 +148,24 @@ let ProfileForm = createReactClass({
                     <InputField
                         name='description'
                         label='Describe yourself using one three-syllable word'
-                        value={this.state.description}
-                        validateInputText={this.validateInputText}
-                        display={this.existsInArray('description', 'warnings') ? 'block' : 'none'}
+                        value={ this.state.description }
+                        validateInputText={ this.validateInputText }
+                        display={ this.existsInArray('description', 'warnings') ? 'block' : 'none' }
                         warning='Just one word!'
                     />
                     <LookingFor
-                        lookingFor={this.props.lookingFor}
-                        validateLookingFor={this.validateLookingFor}
-                        whichChecked={this.state.lookingFor.slice()}
+                        lookingFor={ this.props.lookingFor }
+                        validateLookingFor={ this.validateLookingFor }
+                        whichChecked={ this.state.lookingFor.slice() }
                     />
                     <input
                         type='submit'
                         className='w3-margin w3-button w3-border'
                         value='Make My Profile!'
-                        onClick={this.validateProfile}
+                        onClick={ this.validateProfile }
                     />
                 </form>
-                {this.state.form_complete ? <Redirect to='/profile'/> : ''}
+                { this.state.form_complete ? <Redirect to='/profile'/> : '' }
             </div>
         );
       },
