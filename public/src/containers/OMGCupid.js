@@ -26,7 +26,7 @@ const RouteOrRedirectHome = (props) => {
         <Route
             path={ props.path }
             render={ () =>
-                props.shouldNotRedirect ? (props.component) : (<Redirect to={{ pathname: '/' }} />)
+                props.noRedirectCondition ? (props.component) : (<Redirect to={{ pathname: '/' }} />)
             }
         />
     )
@@ -76,12 +76,12 @@ export default class OMGCupid extends Component {
                     />
                     <RouteOrRedirectHome
                         path="/profile"
-                        shouldNotRedirect={ this.state.userProfile.username }
+                        noRedirectCondition={ this.state.userProfile.username }
                         component={ <Profile userProfile={ this.state.userProfile } /> }
                     />
                     <RouteOrRedirectHome
                         path="/mail"
-                        shouldNotRedirect={ this.state.userProfile.username }
+                        noRedirectCondition={ this.state.userProfile.username }
                         component={
                             <Mailbox
                                 gender={ this.state.userProfile.sex }
@@ -92,7 +92,7 @@ export default class OMGCupid extends Component {
                     />
                     <RouteOrRedirectHome
                         path="/users"
-                        shouldNotRedirect={ this.state.userProfile.username }
+                        noRedirectCondition={ this.state.userProfile.username }
                         component={ <Users users={ this.state.users } /> }
                     />
                 </div>
@@ -103,12 +103,9 @@ export default class OMGCupid extends Component {
     /* Application methods */
 
     makeProfile = (profileObj) => {
-        this.state.userProfile.username = profileObj.username
-        this.state.userProfile.age = profileObj.age
-        this.state.userProfile.sex = profileObj.sex
-        this.state.userProfile.description = profileObj.description
-        this.state.userProfile.lookingFor = profileObj.lookingFor
-        this.state.userProfile.canCount = profileObj.canCount
+        // Set userProfile properties from form
+        let properties = ['username', 'age', 'sex', 'description', 'lookingFor', 'canCount']
+        properties.map((p) => this.state.userProfile[p] = profileObj[p])
 
         this.state.users = this.generateUsers(profileObj.sex)
         this.setState(this.state)
