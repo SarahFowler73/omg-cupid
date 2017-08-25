@@ -1,89 +1,86 @@
 // Libs
-import React from 'react';
-import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
-import { Redirect } from 'react-router-dom';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Redirect } from 'react-router-dom'
 
-import { RadioButton, InputField, AgeField, SexField, LookingFor } from './profile-fields';
+import { RadioButton, InputField, AgeField, SexField, LookingFor } from './profile-fields'
 
-let ProfileForm = createReactClass({
+export default class ProfileForm extends Component {
 
-    propTypes: {
+    static propTypes = {
         ageOpts: PropTypes.array.isRequired,
         sexOpts: PropTypes.arrayOf(PropTypes.string).isRequired,
         lookingFor: PropTypes.array.isRequired,
         submitForm: PropTypes.func.isRequired,
-      },
+    }
 
-    getInitialState: function () {
-        return {
-            username: '',
-            age: '',
-            sex: '',
-            description: '',
-            lookingFor: [],
-            canCount: false,
-            warnings: [],
-            form_complete: false,
-          };
-      },
+    state = {
+        username: '',
+        age: '',
+        sex: '',
+        description: '',
+        lookingFor: [],
+        canCount: false,
+        warnings: [],
+        form_complete: false,
+    }
 
-    existsInArray: function (value, stateArrayKey) {
+    existsInArray = (value, stateArrayKey) => {
         // Return int > 0 if exists in state attribute of array type
         return this.state[stateArrayKey].filter(
-            function (val) {return val == value;}
-        ).length;
-      },
+            function (val) {return val == value}
+        ).length
+    }
 
-    addToArray: function (value, stateArrayKey) {
+    addToArray = (value, stateArrayKey) => {
         // Add to state attribute of array type
         let arr = this.state[stateArrayKey].slice();
         if (!this.existsInArray(value, stateArrayKey))
-            arr.push(value);
-        return arr;
-      },
+            arr.push(value)
+        return arr
+    }
 
-    removeFromArray: function (value, stateArrayKey) {
+    removeFromArray = (value, stateArrayKey) => {
         // Remove from state attribute of array type
-        let arr = this.state[stateArrayKey].slice();
+        let arr = this.state[stateArrayKey].slice()
         if (this.existsInArray(value, stateArrayKey))
-            arr.splice(arr.indexOf(value), 1);
-        return arr;
-      },
+            arr.splice(arr.indexOf(value), 1)
+        return arr
+    }
 
-    validateInputText: function (evt, value) {
-        this.state[value] = evt.target.value; // set the value
+    validateInputText = (evt, value) => {
+        this.state[value] = evt.target.value // set the value
 
         // Handle warnings for spaces
         this.state.warnings = /\s/.test(evt.target.value) ?
             this.addToArray(value, 'warnings')
             :
-            this.removeFromArray(value, 'warnings');
-        this.setState(this.state);
-      },
+            this.removeFromArray(value, 'warnings')
+        this.setState(this.state)
+    }
 
-    validateAgeSexChoice: function (evt, component) {
-        let toCheck = component === 'sex' ? 'other' : '35+';
+    validateAgeSexChoice = (evt, component) => {
+        let toCheck = component === 'sex' ? 'other' : '35+'
         if (evt.target.value === toCheck) {
-          this.state.warnings = this.addToArray(component, 'warnings');
-          this.state[component] = '';
+          this.state.warnings = this.addToArray(component, 'warnings')
+          this.state[component] = ''
         } else {
-          this.state.warnings = this.removeFromArray(component, 'warnings');
-          this.state[component] = evt.target.value;
+          this.state.warnings = this.removeFromArray(component, 'warnings')
+          this.state[component] = evt.target.value
         }
 
-        this.setState(this.state);
-      },
+        this.setState(this.state)
+    }
 
-    validateLookingFor: function (evt) {
+    validateLookingFor = (evt) => {
         this.state.lookingFor = evt.target.checked ?
             this.addToArray(evt.target.value, 'lookingFor')
             :
             this.removeFromArray(evt.target.value, 'lookingFor');
         this.setState(this.state);
-      },
+    }
 
-    checkDescription: function (description) {
+    checkDescription = (description) => {
         // Use datamuse dictionary api to check if description
         // is three syllables
         fetch(`http://api.datamuse.com/words?sp=${description}&qe=sp&md=s&max=1`)
@@ -91,31 +88,31 @@ let ProfileForm = createReactClass({
             .then(function (responseData) {
 
                 this.state.canCount = responseData.length && responseData[0].numSyllables == 3;
-                this.setState(this.state);
-              }.bind(this));
-      },
+                this.setState(this.state)
+              }.bind(this))
+    }
 
-    checkMissing: function () {
+    checkMissing = () => {
         // Return true if not all values are filled out
         // minus warnings and canCount
         return Object.values(this.state).filter(
-            function (val) {return val && val.length;}
-        ).length < Object.values(this.state).length - 3;
-      },
+            function (val) {return val && val.length}
+        ).length < Object.values(this.state).length - 3
+    }
 
-    validateProfile: function (evt, props) {
-        evt.preventDefault();
+    validateProfile = (evt, props) => {
+        evt.preventDefault()
         if (this.state.warnings.length || this.checkMissing()) {
-          alert('You have invalid or empty values in your profile!');
+          alert('You have invalid or empty values in your profile!')
         } else {
-          this.state.form_complete = true;
-          this.setState(this.state);
-          this.checkDescription(this.state.description);
-          this.props.submitForm(this.state);
+          this.state.form_complete = true
+          this.setState(this.state)
+          this.checkDescription(this.state.description)
+          this.props.submitForm(this.state)
         }
-      },
+    }
 
-    render: function () {
+    render () {
         return (
             <div id='profile-form'
                  className='w3-card-4 w3-round w3-white w3-center w3-margin w3-padding'
@@ -168,7 +165,5 @@ let ProfileForm = createReactClass({
                 { this.state.form_complete ? <Redirect to='/profile'/> : '' }
             </div>
         );
-      },
-  });
-
-export default ProfileForm;
+    }
+}
