@@ -3,7 +3,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 
-import { InputField, SelectField, CheckboxGroup, RadioGroup } from './profile-fields'
+import { InputField } from './InputField'
+import { SelectField } from './SelectField'
+import { CheckboxGroup } from './Checkbox'
+import { RadioGroup } from './Radio'
 import { FormGroup } from './FormGroup'
 
 export default class ProfileForm extends Component {
