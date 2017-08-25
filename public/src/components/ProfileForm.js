@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 
-import { FormGroup, InputField, SelectField, CheckboxGroup, SexField } from './profile-fields'
+import { InputField, SelectField, CheckboxGroup, RadioGroup } from './profile-fields'
+import { FormGroup } from './FormGroup'
 
 export default class ProfileForm extends Component {
 
@@ -143,15 +144,20 @@ export default class ProfileForm extends Component {
                             validateSelect={ this.validateAgeSexChoice }
                         />
                     </FormGroup>
-                    <SexField
-                        sexOpts={ this.props.sexOpts }
-                        validateSexChoice={ this.validateAgeSexChoice }
-                        display={ this.existsInArray('sex', 'warnings') ? 'block' : 'none' }
-                        whichChecked={ this.state.sex }
+                    <FormGroup
+                        name='sex'
+                        label='Sex'
+                        existsInArray={ this.existsInArray }
                         warning={'Unfortunately, the only joke I have ' +
-                            'depends on binary sex choice. Sorry. :('
-                        }
-                    />
+                            'depends on binary sex choice. Sorry. :(' }
+                    >
+                        <RadioGroup
+                            name='sex'
+                            buttons={ this.props.sexOpts }
+                            validateButtons={ this.validateAgeSexChoice }
+                            whichChecked={ this.state.sex }
+                        />
+                    </FormGroup>
                     <FormGroup
                         name='description'
                         label='Describe yourself using one three-syllable word'
