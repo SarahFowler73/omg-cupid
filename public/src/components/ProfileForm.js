@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 
-import { RadioButton, InputField, AgeField, SexField, LookingFor } from './profile-fields'
+import { FormGroup, InputField, SelectField, CheckboxGroup, SexField } from './profile-fields'
 
 export default class ProfileForm extends Component {
 
@@ -119,20 +119,30 @@ export default class ProfileForm extends Component {
             >
                 <h3>Make Your Profile!</h3>
                 <form className='profileForm'>
-                    <InputField
+                    <FormGroup
                         name='username'
                         label='Username'
-                        value={ this.state.username }
-                        validateInputText={ this.validateInputText }
-                        display={ this.existsInArray('username', 'warnings') ? 'block' : 'none' }
+                        existsInArray={ this.existsInArray }
                         warning='No spaces in usernames!'
-                     />
-                    <AgeField
-                        ageOpts={ this.props.ageOpts }
-                        validateAgeChoice={ this.validateAgeSexChoice }
-                        display={ this.existsInArray('age', 'warnings') ? 'block' : 'none' }
+                    >
+                        <InputField
+                            name='username'
+                            value={ this.state.username }
+                            validateInputText={ this.validateInputText }
+                        />
+                    </FormGroup>
+                    <FormGroup
+                        name='age'
+                        label='Age'
+                        existsInArray={ this.existsInArray }
                         warning='Ew. No one wants to think about old people dating. Go away.'
-                    />
+                    >
+                        <SelectField
+                            name='age'
+                            options={ this.props.ageOpts }
+                            validateSelect={ this.validateAgeSexChoice }
+                        />
+                    </FormGroup>
                     <SexField
                         sexOpts={ this.props.sexOpts }
                         validateSexChoice={ this.validateAgeSexChoice }
@@ -142,19 +152,31 @@ export default class ProfileForm extends Component {
                             'depends on binary sex choice. Sorry. :('
                         }
                     />
-                    <InputField
+                    <FormGroup
                         name='description'
                         label='Describe yourself using one three-syllable word'
-                        value={ this.state.description }
-                        validateInputText={ this.validateInputText }
-                        display={ this.existsInArray('description', 'warnings') ? 'block' : 'none' }
+                        existsInArray={ this.existsInArray }
                         warning='Just one word!'
-                    />
-                    <LookingFor
-                        lookingFor={ this.props.lookingFor }
-                        validateLookingFor={ this.validateLookingFor }
-                        whichChecked={ this.state.lookingFor.slice() }
-                    />
+                    >
+                        <InputField
+                            name='description'
+                            value={ this.state.description }
+                            validateInputText={ this.validateInputText }
+                        />
+                    </FormGroup>
+                    <FormGroup
+                        name='lookingFor'
+                        label='Looking For'
+                        existsInArray={ this.existsInArray }
+                        warning=''
+                    >
+                        <CheckboxGroup
+                            name='lookingFor'
+                            checkboxes={ this.props.lookingFor }
+                            validateCheckBox={ this.validateLookingFor }
+                            whichChecked={ this.state.lookingFor.slice() }
+                        />
+                    </FormGroup>
                     <input
                         type='submit'
                         className='w3-margin w3-button w3-border'
