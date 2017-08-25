@@ -21,6 +21,17 @@ const getRandomArrayElem = (arr) => {
     return arr[Math.floor(Math.random() * arr.length)]
 }
 
+const RouteOrRedirectHome = (props) => {
+    return (
+        <Route
+            path={ props.path }
+            render={ () =>
+                props.shouldNotRedirect ? (props.component) : (<Redirect to={{ pathname: '/' }} />)
+            }
+        />
+    )
+}
+
 export default class OMGCupid extends Component {
 
     static propTypes = {
@@ -63,39 +74,26 @@ export default class OMGCupid extends Component {
                             />
                         }
                     />
-                    <Route
+                    <RouteOrRedirectHome
                         path="/profile"
-                        render={ () =>
-                            this.state.userProfile.username
-                            ?
-                            (<Profile userProfile={ this.state.userProfile } />)
-                            :
-                            (<Redirect to={{ pathname: '/' }} />)
-                        }
+                        shouldNotRedirect={ this.state.userProfile.username }
+                        component={ <Profile userProfile={ this.state.userProfile } /> }
                     />
-                    <Route
+                    <RouteOrRedirectHome
                         path="/mail"
-                        render={ () =>
-                            this.state.userProfile.username
-                            ?
-                            (<Mailbox
+                        shouldNotRedirect={ this.state.userProfile.username }
+                        component={
+                            <Mailbox
                                 gender={ this.state.userProfile.sex }
-                                messages={ Mail[this.state.userProfile.sex].messages }
+                                messages={ () => Mail[this.state.userProfile.sex].messages }
                                 users={ this.state.users }
-                            />)
-                            :
-                            (<Redirect to={{ pathname: '/' }} />)
+                            />
                         }
                     />
-                    <Route
+                    <RouteOrRedirectHome
                         path="/users"
-                        render={ () =>
-                            this.state.userProfile.username
-                            ?
-                            (<Users users={ this.state.users } />)
-                            :
-                            (<Redirect to={{ pathname: '/' }} />)
-                        }
+                        shouldNotRedirect={ this.state.userProfile.username }
+                        component={ <Users users={ this.state.users } /> }
                     />
                 </div>
             </div>
