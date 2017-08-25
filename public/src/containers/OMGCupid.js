@@ -85,7 +85,7 @@ export default class OMGCupid extends Component {
                         component={
                             <Mailbox
                                 gender={ this.state.userProfile.sex }
-                                messages={ () => Mail[this.state.userProfile.sex].messages }
+                                messages={ this.state.userProfile.sex ? Mail[this.state.userProfile.sex].messages : [] }
                                 users={ this.state.users }
                             />
                         }
