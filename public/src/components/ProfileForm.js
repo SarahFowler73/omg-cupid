@@ -29,30 +29,36 @@ export default class ProfileForm extends Component {
         form_complete: false,
     }
 
-    existsInArray = (value, stateArrayKey) => {
+    existsInArray = (value, key) => {
         // Return int > 0 if exists in state attribute of array type
-        return this.state[stateArrayKey].filter(
+        return this.state[key].filter(
             function (val) {return val == value}
         ).length
     }
 
-    addToArray = (value, stateArrayKey) => {
+    addToArray = (value, key) => {
         // Add to state attribute of array type
-        let arr = this.state[stateArrayKey].slice();
-        if (!this.existsInArray(value, stateArrayKey))
-            arr.push(value)
-        return arr
+        if (this.state[key].indexOf(value) === -1)
+            return [
+                ...this.state[key],
+                value
+        ]
+        return this.state[key]
     }
 
-    removeFromArray = (value, stateArrayKey) => {
+    removeFromArray = (value, key) => {
         // Remove from state attribute of array type
-        let arr = this.state[stateArrayKey].slice()
-        if (this.existsInArray(value, stateArrayKey))
-            arr.splice(arr.indexOf(value), 1)
-        return arr
+        let idx = this.state[key].indexOf(value)
+        if (idx > -1)
+            return [
+                ...this.state[key].slice(0, idx),
+                ...this.state[key].slice(idx + 1)
+            ]
+        return this.state[key]
     }
 
     validateInputText = (evt, value) => {
+
         this.state[value] = evt.target.value // set the value
 
         // Handle warnings for spaces

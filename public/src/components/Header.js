@@ -14,18 +14,23 @@ const NavigationItem = (props) => {
     )
 }
 
+const LogoSection = () => {
+    return (
+        <div id='logo' className='w3-left'>
+            <h1 className='w3-bar-item w3-left'><img src='/assets/omg-logo2.png'/>
+            <p className='w3-bar-item w3-center'><em>A simulated dating experience!</em></p>
+            </h1>
+        </div>
+    )
+}
+
 export const Header = (props) => {
   return (
       <div className='w3-top'>
           <div className='w3-padding w3-block w3-theme-l1 w3-left'>
-              <div id='logo' className='w3-left'>
-                  <h1 className='w3-bar-item w3-left'><img src='/assets/omg-logo2.png'/>
-                  <p className='w3-bar-item w3-center'><em>A simulated dating experience!</em></p>
-                  </h1>
-
-              </div>
+              <LogoSection />
               <nav className='w3-right-align'>
-              { props.has_profile
+              { props.hasProfile
                 ?
                 <ul className="nav">
                     <NavigationItem to="/profile" name="Your Profile" />

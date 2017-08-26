@@ -61,7 +61,7 @@ export default class OMGCupid extends Component {
     render() {
         return (
             <div>
-                <Header has_profile={ this.state.userProfile.username }/>
+                <Header hasProfile={ this.state.userProfile.username }/>
                 <div className='w3-content main-content'>
                     <Route
                         exact path="/"
