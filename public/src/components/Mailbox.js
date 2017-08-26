@@ -35,7 +35,7 @@ const MessageList = (props) => {
     );
 }
 
-const NavigationItem = (props) => {
+const SubNavigationItem = (props) => {
     return (
         <li>
             <NavLink
@@ -52,8 +52,8 @@ export const Mailbox = (props) => {
         <div id='mailbox' className='w3-card-4 w3-round w3-white w3-margin w3-padding'>
 
             <ul className="nav">
-                <NavigationItem to='/mail/inbox' label='Your Messages' />
-                <NavigationItem to='/mail/outbox' label='Sent Messages' />
+                <SubNavigationItem to='/mail/inbox' label='Your Messages' />
+                <SubNavigationItem to='/mail/outbox' label='Sent Messages' />
             </ul>
             <Route path='/mail' render={ () => <Redirect to='/mail/inbox'/> } />
 
