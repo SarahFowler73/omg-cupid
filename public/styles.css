@@ -167,6 +167,12 @@ label.inline-selection {
     color: black
 }
 
+#mailbox .active {
+    background-color: #7d97a5;
+    padding: 8px 16px;
+    color: white;
+}
+
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
     from {opacity: 0;}

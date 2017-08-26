@@ -61,7 +61,7 @@ export const Mailbox = (props) => {
                 path='/mail/outbox'
                 render={ () =>
                     <MessageList
-                        fromto='From'
+                        fromto='To'
                         displayMessages={ props.gender === 'male' }
                         messages={ props.messages }
                         users={ props.users }
@@ -74,7 +74,7 @@ export const Mailbox = (props) => {
                 path='/mail/inbox'
                 render={ () =>
                     <MessageList
-                        fromto='To'
+                        fromto='From'
                         displayMessages={ props.gender === 'female' }
                         messages={ props.messages }
                         users={ props.users }
